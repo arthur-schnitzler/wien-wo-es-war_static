@@ -38,6 +38,7 @@ dann http://localhost:8000/
 ## Aufbau
 
 * `config/ereignisgruppen.csv`, `config/ereignistypen.csv` – Ereignisgruppen (Reihenfolge, Farbe) und Zuordnung jedes Ereignistyps (`eventName/@n`) zu einer Gruppe. Taucht in den Daten ein Typ ohne Zuordnung auf, bricht `prepare_data.py` mit einer Meldung ab.
+* `html/img/` – Logos, Favicons und `site.webmanifest`; `html/favicon.ico` im Wurzelverzeichnis. Originale des Logos (JPG, SVG mit Schriftzug als Text in „Kolo LP Std“) in `vorlagen/`, nicht ausgeliefert
 * `meta/` – vorläufige Projekttexte (Über das Projekt, Quellen). Liegen im Daten-Repo Dateien unter `meta/`, haben diese Vorrang.
 * `pyscripts/prepare_data.py` – bereitet die Daten für XSLT und Kalender auf:
   * `data/indices/listevent.xml` – alle Jahresdateien in einer Datei

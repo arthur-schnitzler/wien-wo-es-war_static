@@ -10,16 +10,16 @@
     <xsl:param name="default_lang">de</xsl:param>
     <xsl:param name="github_url">https://github.com/arthur-schnitzler/wohin-in-wien-damals_static</xsl:param>
     <xsl:param name="html_title">Wohin in Wien damals</xsl:param>
-    <xsl:param name="project_logo">images/logo.jpg</xsl:param>
-    <!-- Ausschnitt (Secession) für Favicon und Navigationsleiste; Quelle: assets/wohin-in-wien-logo.jpg -->
-    <xsl:param name="project_symbol">images/symbol-64.png</xsl:param>
+    <xsl:param name="project_logo">img/logo.jpg</xsl:param>
+    <!-- Symbol für die Navigationsleiste (aus android-chrome-192x192.png); Bilder in html/img/, Originale in vorlagen/ -->
+    <xsl:param name="project_symbol">img/symbol-64.png</xsl:param>
     <xsl:param name="DATAHASH" select="''"/>
     <!-- vorläufig, Domain offen (PLANUNG.md, Abschnitt 13) -->
     <xsl:param name="base_url">https://wohin-in-wien-damals.acdh.oeaw.ac.at</xsl:param>
     <xsl:param name="data_repo">https://github.com/arthur-schnitzler/wohin-in-wien-damals_data</xsl:param>
     <xsl:param name="current-edition" select="'wohin-in-wien-damals'"/>
-    <!-- aus dem Logo (#3B290E), etwas aufgehellt; mit weißer Schrift 9,55:1 -->
-    <xsl:param name="current-colour" select="'#5C4016'"/>
+    <!-- Gold aus dem Logo; mit weißer Schrift 4,74:1 (AA) -->
+    <xsl:param name="current-colour" select="'#976A37'"/>
     <!-- Lizenz der Daten auf der Website -->
     <xsl:param name="lizenz-name" select="'CC BY 4.0'"/>
     <xsl:param name="lizenz-url" select="'https://creativecommons.org/licenses/by/4.0/deed.de'"/>

@@ -56,9 +56,9 @@
                     <div class="container py-4">
                         <xsl:call-template name="one_time_alert"/>
                         <h1 class="startlogo mb-3">
-                            <img src="images/logo-640.jpg" srcset="images/logo-640.jpg 640w, images/logo.jpg 1260w"
-                                sizes="(max-width: 700px) 100vw, 640px" width="640" height="337"
-                                alt="Wohin in Wien damals, 1860–1939" class="img-fluid"/>
+                            <img src="img/logo-640.jpg" srcset="img/logo-640.jpg 640w, img/logo.jpg 1260w"
+                                sizes="(max-width: 700px) 100vw, 640px" width="640" height="349"
+                                alt="Wohin in Wien, 1860–1939" class="img-fluid"/>
                         </h1>
                         <p class="lead">
                             <xsl:text>Kulturelle Ereignisse in Wien </xsl:text>

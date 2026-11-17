@@ -26,7 +26,7 @@
       kal.textContent = "im Kalender";
       inhalt.append(kal);
       return L.circleMarker([o[0], o[1]], {
-        radius: r, color: "#3B290E", weight: 1, fillColor: "#5C4016", fillOpacity: 0.55,
+        radius: r, color: "#3B290E", weight: 1, fillColor: "#976A37", fillOpacity: 0.55,
       }).bindPopup(inhalt).bindTooltip(o[2]);
     });
   var gruppe = L.featureGroup(punkte).addTo(karte);
