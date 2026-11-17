@@ -5,7 +5,7 @@
       uv run pyscripts/prepare_data.py
 
     ant              alles
-    ant seiten       Startseite, 404, Suche, Projektseiten, Impressum, BEACON
+    ant seiten       Startseite, Kalender, 404, Suche, Projektseiten, Impressum, BEACON
     ant tage         Jahres- und Tagesseiten, Weiterleitungen (Phase 1)
     ant register     Register und (vorläufige) Entitätsseiten
     ant entitaeten   Entitätsseiten mit entities.xsl (Phase 3)
@@ -45,6 +45,7 @@
         <saxon in="./xslt/list-of-relevant-uris.xml" out="${target}/css/farben.css" style="./xslt/farben.xsl"/>
         <saxon in="${tage}" out="${target}/index.html" style="./xslt/index.xsl"/>
         <saxon in="${tage}" out="${target}/404.html" style="./xslt/404.xsl"/>
+        <saxon in="${tage}" out="${target}/kalender.html" style="./xslt/kalender.xsl"/>
         <saxon in="${tage}" out="${target}/search.html" style="./xslt/search.xsl"/>
         <saxon basedir="./data/meta" destdir="${target}" includes="*.xml" style="./xslt/meta.xsl">
             <mapper type="glob" from="*.xml" to="*.html"/>

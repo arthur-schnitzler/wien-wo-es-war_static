@@ -64,6 +64,19 @@
                             <xsl:text>: Theater, Oper, Konzerte, Lesungen, Bälle, Kino und mehr, Tag für Tag.</xsl:text>
                         </p>
 
+                        <div class="einstieg-datum p-3 my-3 rounded bg-body-tertiary">
+                            <form class="datum-sprung d-flex flex-wrap align-items-end gap-2" role="search">
+                                <div>
+                                    <label for="datum-sprung" class="form-label mb-1">Wohin an einem bestimmten Tag?</label>
+                                    <input type="date" id="datum-sprung" name="datum" class="form-control"
+                                        min="{$start-year}-01-01" max="{$end-year}-12-31" value="1900-01-01" required="required"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Zum Tag</button>
+                                <a class="btn btn-outline-secondary" href="kalender.html" data-heute-vor="100">Heute vor 100 Jahren</a>
+                                <a class="btn btn-link" href="kalender.html">Zum Kalender</a>
+                            </form>
+                        </div>
+
                         <h2 class="visually-hidden">Bestand</h2>
                         <div class="row g-3 my-3">
                             <xsl:call-template name="zahl">
@@ -124,6 +137,7 @@
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
+                <script src="js/tag.js"></script>
             </body>
         </html>
     </xsl:template>

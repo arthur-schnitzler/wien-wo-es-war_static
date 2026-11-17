@@ -274,6 +274,23 @@ def tei_kopf(titel):
     return root
 
 
+def lies_uri_liste():
+    """xslt/list-of-relevant-uris.xml als {subtype: [Beschriftung, Rang]}; Rang wie auf den Karten."""
+    rang_gruppe = {"quelle": 1, "projekt": 2, "normdaten": 4}
+    liste = {}
+    root = etree.parse(str(ROOT / "xslt" / "list-of-relevant-uris.xml")).getroot()
+    for i, item in enumerate(root.iterfind("item")):
+        abbr = item.findtext("abbr", "").strip()
+        if abbr and abbr not in liste:
+            rang = rang_gruppe.get(item.get("group"), 2) * 1000 + i
+            liste[abbr] = [
+                item.findtext("caption", "").strip(),
+                rang,
+                item.find("color") is not None,
+            ]
+    return liste
+
+
 def main():
     gruppen, typen = lies_konfiguration()
     namen, urheber_von = lies_register()
@@ -376,11 +393,36 @@ def main():
         "gruppen": gruppen_ids,
         "tage": tage_kompakt,
         "laufend": {tag: ids for tag, ids in sorted(laufend.items())},
+        # Ereignisse mit Zeitraum: id -> [von, bis]; damit findet der Kalender das Jahr eines
+        # laufenden Ereignisses, das in einem früheren Jahr begonnen hat
+        "zeitraeume": {
+            d["id"]: [d["datum"], d["ende"]]
+            for d in mehrtaegig
+            if not d.get("unbestimmt")
+        },
     }
     _, gz_uebersicht = schreibe_json(
         JS_DATA / "kalender" / "uebersicht.json", uebersicht
     )
     schreibe_json(JS_DATA / "ereignistypen.json", {"gruppen": gruppen, "typen": typen})
+
+    # Auswahllisten für die Kalenderfilter: Spielstätten, Institutionen, Quellen mit Anzahl
+    alle = [d for e in jahre.values() for d in e]
+    zaehle = lambda feld: Counter(k for d in alle for k in d.get(feld, []))
+    schreibe_json(
+        JS_DATA / "kalender" / "filter.json",
+        {
+            "orte": [[k, namen.get(k, k), n] for k, n in zaehle("orte").most_common()],
+            "institutionen": [
+                [k, namen.get(k, k), n]
+                for k, n in zaehle("institutionen").most_common()
+            ],
+            "quellen": [[q, n] for q, n in zaehle("quellen").most_common()],
+        },
+    )
+
+    # Beschriftung, Gruppe und Reihenfolge der URI-Links (Farben: css/farben.css)
+    schreibe_json(JS_DATA / "uris.json", lies_uri_liste())
 
     # dieselbe Zuordnung als XML für die Stylesheets
     et_root = etree.Element("ereignistypen")

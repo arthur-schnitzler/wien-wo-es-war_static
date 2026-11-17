@@ -13,6 +13,16 @@
     });
   });
 
+  // „Heute vor 100 Jahren“: Link auf die Tagesseite des Datums vor n Jahren
+  document.querySelectorAll("a[data-heute-vor]").forEach(function (a) {
+    var heute = new Date();
+    var jahr = heute.getFullYear() - Number(a.dataset.heuteVor);
+    var monat = String(heute.getMonth() + 1).padStart(2, "0");
+    var tag = String(heute.getDate()).padStart(2, "0");
+    a.href = jahr + "-" + monat + "-" + tag + ".html";
+    a.title = tag + "." + monat + "." + jahr;
+  });
+
   function kopieren(text, knopf) {
     var fertig = function () {
       var alt = knopf.innerHTML;

@@ -1,0 +1,396 @@
+/* Kalender (js/calendar.js) */
+
+.kal-leiste {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.kal-navigation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.kal-titel {
+    min-width: 9ch;
+    text-align: center;
+}
+
+.kal-sprung {
+    margin-left: auto;
+}
+
+.kal-sprung input {
+    width: auto;
+}
+
+/* Filter */
+.kal-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.kal-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+.kal-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 50rem;
+    background: var(--bs-body-bg);
+    color: var(--bs-secondary-color);
+}
+
+.kal-chip-farbe {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: 2px solid var(--gruppe-farbe);
+}
+
+.kal-chip.aktiv {
+    color: var(--bs-body-color);
+    border-color: var(--gruppe-farbe);
+}
+
+.kal-chip.aktiv .kal-chip-farbe {
+    background: var(--gruppe-farbe);
+}
+
+.kal-chip-zahl {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-chip-aktionen {
+    font-size: 0.85rem;
+    margin-left: 0.25rem;
+}
+
+.kal-auswahl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.kal-auswahl select {
+    width: auto;
+    max-width: 100%;
+}
+
+.kal-entitaet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: normal;
+    font-size: 0.85rem;
+}
+
+.btn-close-sm {
+    width: 0.6em;
+    height: 0.6em;
+}
+
+.kal-status:empty {
+    display: none;
+}
+
+/* Zeitraum: Jahre (Zeilen) × Monate (Spalten) */
+.kal-zeitraum-rahmen {
+    overflow-x: auto;
+}
+
+.kal-zeitraum {
+    border-collapse: separate;
+    border-spacing: 2px;
+    font-size: 0.75rem;
+    margin: 0 auto;
+}
+
+.kal-zeitraum th {
+    font-weight: normal;
+    color: var(--bs-secondary-color);
+    text-align: center;
+    padding: 0 0.25rem;
+}
+
+.kal-zeitraum tr.dekade th,
+.kal-zeitraum tr.dekade td {
+    border-top: 0.5rem solid transparent;
+}
+
+.kal-zeitraum td {
+    width: 2.6rem;
+    height: 1.1rem;
+    padding: 0;
+    background: var(--bs-tertiary-bg);
+    border-radius: 2px;
+}
+
+.kal-zeitraum td.kal-summe {
+    background: none;
+    width: auto;
+    padding-left: 0.5rem;
+    text-align: right;
+    color: var(--bs-secondary-color);
+}
+
+.kal-zelle {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 1.1rem;
+    border: 0;
+    border-radius: 2px;
+    padding: 0;
+}
+
+.kal-jahr-knopf {
+    border: 0;
+    background: none;
+    padding: 0 0.25rem;
+    color: var(--bs-link-color);
+    text-decoration: underline;
+}
+
+/* Jahr */
+.kal-jahr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.5rem;
+}
+
+.kal-mini {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.kal-mini-wt {
+    color: var(--bs-secondary-color);
+}
+
+.kal-mini-tag {
+    border: 0;
+    border-radius: 3px;
+    padding: 0.15rem 0;
+}
+
+.kal-mini-leer {
+    color: var(--bs-tertiary-color);
+    padding: 0.15rem 0;
+}
+
+/* Monat */
+.kal-monat {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 3px;
+}
+
+.kal-monat-wt {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-monat-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    gap: 0.2rem;
+    min-height: 6.5rem;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 4px;
+    background: var(--bs-body-bg);
+    font-size: 0.78rem;
+    overflow: hidden;
+}
+
+.kal-monat-tag:not(.hat) {
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-secondary-color);
+}
+
+.kal-monat-tag.wochenende .kal-monat-nr {
+    color: var(--bs-secondary-color);
+}
+
+.kal-monat-tag.gewaehlt {
+    outline: 2px solid var(--projekt-farbe);
+}
+
+.kal-monat-tag:hover {
+    border-color: var(--projekt-farbe);
+}
+
+.kal-monat-nr {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.kal-monat-n {
+    font-weight: normal;
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-punkte {
+    display: flex;
+    gap: 3px;
+}
+
+.kal-punkt {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--gruppe-farbe);
+}
+
+.kal-monat-titel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.kal-monat-titel > span,
+.kal-liste-titel > li {
+    border-left: 3px solid var(--gruppe-farbe, transparent);
+    padding-left: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kal-mehr {
+    color: var(--bs-secondary-color);
+    border-left: 0 !important;
+}
+
+/* Monat als Liste (schmale Bildschirme) */
+.kal-monatsliste > li {
+    margin-bottom: 0.75rem;
+}
+
+.kal-liste-tag {
+    border: 0;
+    background: none;
+    padding: 0;
+    text-align: left;
+    color: var(--bs-link-color);
+}
+
+.kal-liste-titel {
+    margin: 0.2rem 0 0 0.5rem;
+    font-size: 0.9rem;
+}
+
+.kal-liste-titel > li {
+    white-space: normal;
+}
+
+/* Tag: Seitenleiste */
+.kal-tag-hintergrund {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1050;
+}
+
+.kal-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(32rem, 100%);
+    display: flex;
+    flex-direction: column;
+    background: var(--bs-body-bg);
+    box-shadow: -0.25rem 0 1rem rgba(0, 0, 0, 0.2);
+}
+
+.kal-tag-kopf {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.kal-tag-liste {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.kal-tag-fuss {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--bs-border-color);
+}
+
+body.kal-offen {
+    overflow: hidden;
+}
+
+.kal-karte {
+    border: 1px solid var(--bs-border-color);
+    border-left: 0.3rem solid var(--gruppe-farbe);
+    border-radius: 4px;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.kal-karte .ereignis-typ {
+    font-size: 0.7rem;
+}
+
+.kal-karte-zeile {
+    line-height: 1.35;
+}
+
+@media (max-width: 575.98px) {
+    .kal-zeitraum {
+        border-spacing: 1px;
+        font-size: 0.65rem;
+    }
+
+    .kal-zeitraum td {
+        width: 1.3rem;
+    }
+
+    .kal-zeitraum th {
+        padding: 0;
+    }
+
+    .kal-zeitraum td.kal-summe {
+        padding-left: 0.2rem;
+    }
+
+    .kal-sprung {
+        margin-left: 0;
+    }
+}

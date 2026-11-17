@@ -6,6 +6,7 @@ Fehler (Exit-Code 1):
 - Die Weiterleitung pmbNNNN.html existiert und zeigt auf den richtigen Tag.
 - Ereignisse mit Zeitraum erscheinen an jedem Tag ihrer Dauer (data-ereignis).
 - Die Summen in den Kalender-JSONs stimmen mit der Anzahl der Ereignisse pro Jahr überein.
+- Die Kalenderdaten beim ersten Aufruf bleiben unter 150 KB gzip.
 
 Warnungen (mit --streng ebenfalls Fehler):
 - interne Links auf nicht vorhandene Dateien
@@ -14,6 +15,7 @@ Warnungen (mit --streng ebenfalls Fehler):
 Aufruf: uv run pyscripts/check_output.py [--streng]
 """
 
+import gzip
 import json
 import re
 import sys
@@ -31,7 +33,9 @@ XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 WARNGRENZE_MB = 800
 
 # Interne Ziele, die erst in späteren Phasen entstehen; fehlen sie, ist das nur ein Hinweis
-SPAETER = {"kalender.html": "Phase 2"}
+SPAETER = {}
+# Kalenderdaten beim ersten Aufruf (Übersicht, Typen, Filter, URIs und das größte Jahr), gzip
+KALENDER_BUDGET_KB = 150
 
 
 def lies_ereignisse():
@@ -139,6 +143,27 @@ def main():
             fehler.append(f"uebersicht.json {jahr}: {summe_ueb} statt {anzahl}")
         if summe_jahr != anzahl:
             fehler.append(f"{jahr}.json: {summe_jahr} statt {anzahl}")
+
+    # 3b. Ladebudget des Kalenders
+    js = HTML / "js-data"
+    basis = [
+        js / "kalender" / "uebersicht.json",
+        js / "ereignistypen.json",
+        js / "kalender" / "filter.json",
+        js / "uris.json",
+    ]
+    jahre_gz = [
+        len(gzip.compress(p.read_bytes(), 9))
+        for p in (js / "kalender").glob("[0-9][0-9][0-9][0-9].json")
+    ]
+    erster_aufruf = (
+        sum(len(gzip.compress(p.read_bytes(), 9)) for p in basis) + max(jahre_gz)
+    ) / 1024
+    print(f"Kalender, erster Aufruf: höchstens {erster_aufruf:.0f} KB gzip")
+    if erster_aufruf > KALENDER_BUDGET_KB:
+        fehler.append(
+            f"Kalenderdaten beim ersten Aufruf {erster_aufruf:.0f} KB > {KALENDER_BUDGET_KB} KB gzip"
+        )
 
     # 4. Interne Links (alle Seiten außer den Weiterleitungen)
     ereignis_ids = {e["id"] for e in ereignisse}
