@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="ueber-das-projekt.xml">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title level="s">Wohin in Wien damals</title>
+        <title type="main">Über das Projekt</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Wohin in Wien damals</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Vorläufiger Text aus dem Static-Repo; wird durch meta/ im Daten-Repo ersetzt.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <p>»Wohin in Wien damals?« macht kulturelle Ereignisse in Wien zwischen 1860 und 1939 durchsuchbar: Theater- und Opernaufführungen, Konzerte, Lesungen, Bälle, Filmvorführungen und mehr. Über einen Kalender ist jeder Tag dieses Zeitraums erreichbar.</p>
+        <p>Die Daten verbinden Einträge aus verschiedenen Aufführungsdatenbanken und Online-Quellen zeitlich und örtlich. Aufgenommen sind nur Ereignisse, die innerhalb der heutigen Wiener Stadtgrenze stattgefunden haben. Vollständig erfasst sind bisher nur die Aufführungen von Burgtheater und Oper.</p>
+        <p>Die Daten werden in der <ref target="https://pmb.acdh.oeaw.ac.at">PMB – Personen der Moderne Basis</ref> gepflegt und im <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_data">Daten-Repositorium</ref> für diese Website aufbereitet.</p>
+        <p>Die Website befindet sich im Aufbau.</p>
+      </div>
+    </body>
+  </text>
+</TEI>

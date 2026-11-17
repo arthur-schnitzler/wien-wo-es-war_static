@@ -1,0 +1,110 @@
+typ,gruppe
+Theateraufführung,theater
+Theaterpremiere,theater
+Theateruraufführung,theater
+Theaterneuinszenierung,theater
+Theaterneueinstudierung,theater
+Theatererstaufführung,theater
+Schulaufführung,theater
+Studierendenaufführung,theater
+Privataufführung,theater
+Geschlossene Aufführung,theater
+Varieté,theater
+Revue,theater
+Marionettentheater,theater
+Puppenspiel,theater
+Opernaufführung,oper
+Opernpremiere,oper
+Opernuraufführung,oper
+Operettenaufführung,oper
+Ballett,ballett
+Ballettpremiere,ballett
+Balletturaufführung,ballett
+Ballettsoirée,ballett
+Tanzaufführung,ballett
+Konzert,konzert
+Quartett,konzert
+Liederkonzert,konzert
+Philharmonisches Konzert,konzert
+Klavierkonzert,konzert
+Orchesterkonzert,konzert
+Sinfoniekonzert,konzert
+Gesellschaftskonzert,konzert
+Privates Konzert,konzert
+Volksgesang,konzert
+Trio,konzert
+Kammermusikkonzert,konzert
+Violinkonzert,konzert
+Schulkonzert,konzert
+Wohltätigkeitskonzert,konzert
+Cellokonzert,konzert
+Kompositionskonzert,konzert
+Chorgesang,konzert
+Orgelkonzert,konzert
+Violin-Klavier-Konzert,konzert
+Musikpremiere,konzert
+Matinée,konzert
+Filmvorführung,film
+Private Filmvorführung,film
+Filmpremiere,film
+Private Lesung,lesung
+Lesung,lesung
+Vortrag,lesung
+Vorlesung,lesung
+Schulvortragsabend,lesung
+Privater Vortrag,lesung
+Panoramabesuch,ausstellung
+Museumsbesuch,ausstellung
+Ausstellungsbesuch,ausstellung
+Ausstellung,ausstellung
+Zirkusvorstellung,ausstellung
+Völkerschau,ausstellung
+Zaubervorstellung,ausstellung
+Billardvorstellung,ausstellung
+Festival,ausstellung
+Hausball,ball
+Soirée,ball
+Ball,ball
+Hochzeit,ball
+Kränzchen,ball
+Vergnügungsabend,ball
+Empfang,ball
+Bankett,ball
+Feier,ball
+Maskenball,ball
+Redoute,ball
+Kommers,ball
+Polterabend,ball
+Kostümfest,ball
+Soirée-dansante,ball
+Tanz,ball
+Technikerkränzchen,ball
+Tanzkränzchen,ball
+Universitätskränzchen,ball
+Medizinerkränzchen,ball
+Unitaskränzchen,ball
+Wärmestuben-Kränzchen,ball
+Kneipe,ball
+Narrenabend,ball
+Gesellschaftsabend,ball
+Damenabend,ball
+Spielabend,ball
+Diner,ball
+Silberne Hochzeit,ball
+Probe,probe
+Generalprobe,probe
+Kostümprobe,probe
+Arrangierprobe,probe
+Leseprobe,probe
+Vereinstreffen,sonstiges
+Veranstaltung,sonstiges
+Privates Treffen,sonstiges
+Wohltätigkeitsveranstaltung,sonstiges
+Beerdigung,sonstiges
+Sitzung,sonstiges
+Kongress,sonstiges
+Praktische Übung,sonstiges
+Duell,sonstiges
+Umzug,sonstiges
+Heilige Messe,sonstiges
+Schiedsgericht,sonstiges

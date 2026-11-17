@@ -8,14 +8,16 @@
         <xsl:param name="zoteroTitle" select="false()"></xsl:param>
         <xsl:param name="pageId" select="''"></xsl:param>
         <xsl:param name="customUrl" select="$base_url"></xsl:param>
-        <xsl:variable name="fullUrl" select="concat($customUrl, $pageId)"/>
+        <xsl:variable name="fullUrl" select="concat($customUrl, '/', $pageId)"/>
         <xsl:if test="$zoteroTitle">
             <meta name="citation_title" content="{$zoteroTitle}"/>
         </xsl:if>
-        <meta name="citation_editors" content="Andorfer, Hanna; Andorfer, Ronja"/>
-        <meta name="citation_publisher" content="Austrian Centre for Digitale Humanities (ACDH)"/>
+        <xsl:if test="normalize-space($herausgeber)">
+            <meta name="citation_editors" content="{$herausgeber}"/>
+        </xsl:if>
+        <meta name="citation_publisher" content="Austrian Centre for Digital Humanities and Cultural Heritage (ACDH-CH)"/>
         <meta name="citation_book_title" content="{$project_title}"/>
         <meta name="citation_public_url" content="{$fullUrl}"/>
-        <meta name="citation_date" content="2025"/>
+        <meta name="citation_date" content="{$publikationsjahr}"/>
     </xsl:template>
 </xsl:stylesheet>

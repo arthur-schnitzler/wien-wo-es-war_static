@@ -37,7 +37,7 @@
                     </nav>
                     <div class="container">
                         <h1><xsl:value-of select="$doc_title"/></h1>
-                        <xsl:for-each select=".//div">
+                        <xsl:for-each select="/root/div[@lang = $default_lang]">
                             <xsl:copy>
                                 <xsl:copy-of select="."/>
                             </xsl:copy>

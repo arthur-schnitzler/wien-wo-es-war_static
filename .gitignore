@@ -5,6 +5,12 @@ html/*.xml
 html/beacon.txt
 /html/oai-pmh
 data/imprint.xml
+data/indices/listevent.xml
+data/indices/tage.xml
+data/indices/mehrtaegig.xml
+html/js-data/
+html/sitemap.xml
+wohin-in-wien-damals_data/
 
 data/indices/*.xml
 data/editions/*.xml

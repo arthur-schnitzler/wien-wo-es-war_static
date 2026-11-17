@@ -4,7 +4,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="2.0"
-    exclude-result-prefixes="xsl tei xs">
+    exclude-result-prefixes="#all">
     
     <xsl:import href="./partials/html_navbar.xsl"/>
     <xsl:import href="./partials/html_head.xsl"/>
@@ -33,8 +33,6 @@
                     <xsl:with-param name="pageId" select="$link"></xsl:with-param>
                     <xsl:with-param name="zoteroTitle" select="$doc_title"></xsl:with-param>
                 </xsl:call-template>
-                <!-- add the name of the author of the current article -->
-                <meta name="citation_author" content="Foo, Bar"/> 
             </head>
             
             <body class="d-flex flex-column h-100">
@@ -73,6 +71,12 @@
     </xsl:template>
     <xsl:template match="tei:div">
         <div id="{generate-id()}"><xsl:apply-templates/></div>
+    </xsl:template>
+    <xsl:template match="tei:head">
+        <h2 class="fs-4 mt-4"><xsl:apply-templates/></h2>
+    </xsl:template>
+    <xsl:template match="tei:ref[@target]">
+        <a href="{@target}"><xsl:apply-templates/></a>
     </xsl:template>
     <xsl:template match="tei:lb">
         <br/>

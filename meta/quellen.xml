@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="quellen.xml">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title level="s">Wohin in Wien damals</title>
+        <title type="main">Quellen</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Wohin in Wien damals</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Vorläufiger Text aus dem Static-Repo; wird durch meta/ im Daten-Repo ersetzt.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head>Burgtheater, Kulturerbe digital</head>
+        <p>Historisches Verzeichnis aller Veranstaltungen im Burgtheater und den dazugehörigen Spielstätten. Übernommen sind die Ereignisse 1850–1945 und die gespielten Theaterstücke. <ref target="https://kulturerbe.burgtheater.at">kulturerbe.burgtheater.at</ref></p>
+      </div>
+      <div>
+        <head>Spielplan der Wiener Oper 1869 bis 1955</head>
+        <p>Alle Aufführungen bis 1945, erstellt von Christian Glanz, Thomas Hübl, Carolin Bahr u. a. (mdw). <ref target="https://www.mdw.ac.at/imi/operapolitics/spielplan-wiener-oper/web/">Spielplan der Wiener Oper</ref></p>
+      </div>
+      <div>
+        <head>Arthur Schnitzler – Kulturveranstaltungen</head>
+        <p>Über 6.200 Ereignisse, die Arthur Schnitzler zwischen 1876 und 1931 besuchte oder an denen er mitwirkte. <ref target="https://schnitzler-kultur.acdh.oeaw.ac.at">schnitzler-kultur.acdh.oeaw.ac.at</ref></p>
+      </div>
+      <div>
+        <head>Arthur Schnitzler: Briefwechsel mit Autorinnen und Autoren</head>
+        <p>Ereignisse, die in Schnitzlers Korrespondenz erwähnt werden. <ref target="https://schnitzler-briefe.acdh.oeaw.ac.at">schnitzler-briefe.acdh.oeaw.ac.at</ref></p>
+      </div>
+      <div>
+        <head>Brahms online</head>
+        <p>Werkverzeichnis und Aufführungsdaten zu Johannes Brahms. <ref target="https://brahms-online.oeaw.ac.at">brahms-online.oeaw.ac.at</ref></p>
+      </div>
+      <div>
+        <head>PMB – Personen der Moderne Basis</head>
+        <p>Alle Daten werden in der PMB zusammengeführt und gepflegt. <ref target="https://pmb.acdh.oeaw.ac.at">pmb.acdh.oeaw.ac.at</ref></p>
+      </div>
+      <div>
+        <head>Stadt Wien</head>
+        <p>Für die räumliche Auswahl dient die Wiener Landesgrenze (Stadt Wien – data.wien.gv.at, CC BY 4.0).</p>
+      </div>
+      <div>
+        <head>Weitere Datengeber gesucht</head>
+        <p>Wir freuen uns über weitere Datenbestände, etwa aus den Archiven von Konzerthaus, Musikverein oder Volksoper, und bitten um Kontaktaufnahme.</p>
+      </div>
+    </body>
+  </text>
+</TEI>

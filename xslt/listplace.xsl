@@ -65,7 +65,6 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Ortsname</th>
-                                    <th scope="col">Erwähnungen</th>
                                     <th scope="col">lat</th>
                                     <th scope="col">lng</th>
                                     <th scope="col" data-dt-visible="false">ID</th>
@@ -76,28 +75,19 @@
                                     <xsl:variable name="id">
                                         <xsl:value-of select="data(@xml:id)"/>
                                     </xsl:variable>
+                                    <!-- eigene Koordinaten, sonst die des übergeordneten Ortes -->
+                                    <xsl:variable name="geo" select="(tei:location[@type = 'coords']/tei:geo, tei:location/tei:geo)[1]"/>
                                     <tr>
                                         <td>
                                             <a href="{$id||'.html'}">
-                                                <xsl:value-of select=".//tei:placeName[1]"/>
+                                                <xsl:value-of select="normalize-space(tei:placeName[1])"/>
                                             </a>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="count(.//tei:note[@type='mentions'])"/>
+                                            <xsl:value-of select="replace(tokenize(normalize-space($geo), ' ')[1], ',', '.')"/>
                                         </td>
                                         <td>
-                                            <xsl:choose>
-                                                <xsl:when test="./tei:location/tei:geo">
-                                                    <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo/text(), ' ')[1], ',', '.')"/>
-                                                </xsl:when>
-                                            </xsl:choose>
-                                        </td>
-                                        <td>
-                                            <xsl:choose>
-                                                <xsl:when test="./tei:location/tei:geo">
-                                                    <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo/text(), ' ')[last()], ',', '.')"/>
-                                                </xsl:when>
-                                            </xsl:choose>
+                                            <xsl:value-of select="replace(tokenize(normalize-space($geo), ' ')[last()], ',', '.')"/>
                                         </td>
                                         <td>
                                             <xsl:value-of select="$id"/>

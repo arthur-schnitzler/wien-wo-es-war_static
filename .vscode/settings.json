@@ -6,5 +6,19 @@
       "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "files.watcherExclude": {
+    "**/html/*.html": true,
+    "**/html/js-data/**": true,
+    "**/data/**": true
+  },
+  "search.exclude": {
+    "html/*.html": true,
+    "html/js-data": true,
+    "html/vendor": true,
+    "data": true
+  },
+  "files.exclude": {
+    "html/pmb*.html": true
   }
 }

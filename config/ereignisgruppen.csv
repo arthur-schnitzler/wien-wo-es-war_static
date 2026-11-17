@@ -1,0 +1,11 @@
+id,label,reihenfolge,farbe
+theater,Theater,1,#8C2F39
+oper,Oper & Operette,2,#5E3A8C
+ballett,Ballett & Tanz,3,#A0285F
+konzert,Konzert,4,#1E5A96
+film,Film,5,#3A3A3A
+lesung,Lesung & Vortrag,6,#2D6630
+ausstellung,Ausstellung & Schau,7,#7A5000
+ball,Ball & Gesellschaft,8,#9A3A00
+probe,Probe,9,#4F5D66
+sonstiges,Sonstiges,10,#666666

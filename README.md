@@ -1,71 +1,60 @@
-# Wohin in Wien damals. Veranstaltungen 1860–1939
+# Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939
 
+Statische Website, die kulturelle Ereignisse in Wien 1860–1939 über einen Kalender und eine Suche zugänglich macht.
 
+* Daten: https://github.com/arthur-schnitzler/wohin-in-wien-damals_data
+* gebaut mit dem [DSE-Static-Cookiecutter](https://github.com/acdh-oeaw/dse-static-cookiecutter)
+* Planung und Stand der Umsetzung: [PLANUNG.md](PLANUNG.md)
 
-* data is fetched from https://github.com/arthur-schnitzler/wohin-in-wien-damals_data
-* build with [DSE-Static-Cookiecutter](https://github.com/acdh-oeaw/dse-static-cookiecutter)
+## Lokal bauen
 
-## initial (one time) setup
+Voraussetzungen: Java, Ant, [uv](https://docs.astral.sh/uv/).
 
+```bash
+./shellscripts/fetch_data.sh        # Daten klonen nach data/, datahash.txt, Impressum
+uv run pyscripts/prepare_data.py    # listevent.xml, tage.xml, mehrtaegig.xml, Kalender-JSON
+ant                                 # alle Seiten nach html/
+```
 
+Teilbuilds: `ant seiten`, `ant tage`, `ant register`, `ant entitaeten` (siehe `build.xml`).
 
-* run `./shellscripts/fetch_data.sh`
-* run `ant`
+Das Impressum wird über die Umgebungsvariable `REDMINE_ID` geladen (`REDMINE_ID=… ./shellscripts/dl_imprint.sh`); ohne sie entsteht ein Platzhalter. Auf GitHub kommt die ID aus der Repository-Variable `REDMINE_ID`.
 
-> [!NOTE]
-> The `build.xml` triggered by the `ant` command presumes the following folder-file structure in the data repo:
->
-> ```shell
-> data/
-> ├── editions/
-> │   ├── *.xml
-> │   ├── *.xml
-> │   └── *.xml
-> ├── indices/
-> │   ├── listbibl.xml
-> │   ├── listorg.xml
-> │   ├── listperson.xml
-> │   └── listplace.xml
-> └── meta/
->     └── about.xml
-> ```
->
-> Otherwise, modify the relevant lines of the `build.xml`.
+## Dev-Server
 
-## set up GitHub repo
+```bash
+cd html/
+uv run -m http.server
+```
 
-* create a public, new, and empty (without README, .gitignore, license) GitHub repo https://github.com/arthur-schnitzler/wohin-in-wien-damals_static
-* run `git init` in the root folder of your application wohin-in-wien-damals_static
-* execute the commands described under `…or push an existing repository from the command line` in your new created GitHub repo https://github.com/arthur-schnitzler/wohin-in-wien-damals_static
+dann http://localhost:8000/
 
-## start dev server
+## Aufbau
 
-* `cd html/`
-* `uv run -m http.server`
-* go to [http://0.0.0.0:8000/](http://0.0.0.0:8000/)
+* `config/ereignisgruppen.csv`, `config/ereignistypen.csv` – Ereignisgruppen (Reihenfolge, Farbe) und Zuordnung jedes Ereignistyps (`eventName/@n`) zu einer Gruppe. Taucht in den Daten ein Typ ohne Zuordnung auf, bricht `prepare_data.py` mit einer Meldung ab.
+* `meta/` – vorläufige Projekttexte (Über das Projekt, Quellen). Liegen im Daten-Repo Dateien unter `meta/`, haben diese Vorrang.
+* `pyscripts/prepare_data.py` – bereitet die Daten für XSLT und Kalender auf:
+  * `data/indices/listevent.xml` – alle Jahresdateien in einer Datei
+  * `data/indices/tage.xml` – alle Tage mit Ereignissen
+  * `data/indices/mehrtaegig.xml` – Ereignisse mit Zeitraum
+  * `html/js-data/kalender/uebersicht.json`, `html/js-data/kalender/JJJJ.json`, `html/js-data/ereignistypen.json`
+* `xslt/` – Stylesheets (XSLT 2.0, Saxon HE)
 
-## publish as GitHub Page
+Die Daten-Repo-Struktur (`editions/`, `indices/` im Wurzelverzeichnis) wird von `fetch_data.sh` nach `data/` umgelegt.
 
-* go to https://https://github.com/arthur-schnitzler/wohin-in-wien-damals_static/actions/workflows/build.yml
-* click the `Run workflow` button
+## Veröffentlichen
 
-## Python scripting
+Der Workflow [build.yml](.github/workflows/build.yml) baut die Seite und veröffentlicht sie auf GitHub Pages. Er startet manuell (*Actions → Deploy static content to Pages → Run workflow*) oder per `repository_dispatch` (`update-data`) aus dem Daten-Repo.
 
-The project uses [uv](https://docs.astral.sh/uv/), as Python package and project manager.
+## Docker
 
-## dockerize your application
+* Image bauen: `docker build -f docker/Dockerfile -t wohin-in-wien-damals_static .`
+* Container starten: `docker run -p 80:80 --rm --name wohin-in-wien-damals_static wohin-in-wien-damals_static`
 
-* To build the image run: `docker build -f docker/Dockerfile -t wohin-in-wien-damals_static .`
-* To run the container: `docker run -p 80:80 --rm --name wohin-in-wien-damals_static wohin-in-wien-damals_static`
+## Lizenzen
 
-## Licenses
+Der Code steht unter der [MIT-Lizenz](LICENSE).
 
-This project is released under the [MIT License](LICENSE)
+Die JavaScript-Bibliotheken liegen unter `html/vendor`; ihre Lizenzen stehen jeweils in einer `LICENSE`-Datei oder im Kopf der `.js`-Datei.
 
-### third-party JavaScript libraries
-
-The code for all third-party JavaScript libraries used is included in the `html/vendor` folder, their respective licenses can be found either in a `LICENSE.txt` file or directly in the header of the `.js` file
-
-### SAXON-HE
-
-The projects also includes Saxon-HE, which is licensed separately under the Mozilla Public License, Version 2.0 (MPL 2.0). See the dedicated [LICENSE.txt](saxon/notices/LICENSE.txt)
+Saxon-HE steht unter der Mozilla Public License 2.0, siehe [LICENSE.txt](saxon/notices/LICENSE.txt).
