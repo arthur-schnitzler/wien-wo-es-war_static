@@ -42,6 +42,7 @@
     </target>
 
     <target name="seiten" depends="pruefen" description="Startseite, 404, Suche, Projektseiten, Impressum, BEACON">
+        <saxon in="./xslt/list-of-relevant-uris.xml" out="${target}/css/farben.css" style="./xslt/farben.xsl"/>
         <saxon in="${tage}" out="${target}/index.html" style="./xslt/index.xsl"/>
         <saxon in="${tage}" out="${target}/404.html" style="./xslt/404.xsl"/>
         <saxon in="${tage}" out="${target}/search.html" style="./xslt/search.xsl"/>
@@ -53,7 +54,8 @@
     </target>
 
     <target name="tage" depends="pruefen" description="Jahres- und Tagesseiten, Weiterleitungen">
-        <echo message="Tagesseiten folgen in Phase 1 (xslt/tage.xsl)"/>
+        <!-- eine Transformation: jahre.html, JJJJ.html, JJJJ-MM-TT.html, pmbNNNN.html (Ereignisse) -->
+        <saxon in="${tage}" out="${target}/jahre.html" style="./xslt/tage.xsl"/>
     </target>
 
     <target name="register" depends="pruefen" description="Register und vorläufige Entitätsseiten">

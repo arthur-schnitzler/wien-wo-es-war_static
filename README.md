@@ -14,6 +14,7 @@ Voraussetzungen: Java, Ant, [uv](https://docs.astral.sh/uv/).
 ./shellscripts/fetch_data.sh        # Daten klonen nach data/, datahash.txt, Impressum
 uv run pyscripts/prepare_data.py    # listevent.xml, tage.xml, mehrtaegig.xml, Kalender-JSON
 ant                                 # alle Seiten nach html/
+uv run pyscripts/check_output.py    # Prüfung: jede URI auf ihrer Tagesseite verlinkt u. a.
 ```
 
 Teilbuilds: `ant seiten`, `ant tage`, `ant register`, `ant entitaeten` (siehe `build.xml`).
@@ -38,7 +39,12 @@ dann http://localhost:8000/
   * `data/indices/tage.xml` – alle Tage mit Ereignissen
   * `data/indices/mehrtaegig.xml` – Ereignisse mit Zeitraum
   * `html/js-data/kalender/uebersicht.json`, `html/js-data/kalender/JJJJ.json`, `html/js-data/ereignistypen.json`
-* `xslt/` – Stylesheets (XSLT 2.0, Saxon HE)
+* `xslt/` – Stylesheets (XSLT 3.0, Saxon HE 9.9)
+  * `tage.xsl` – Jahresübersicht, Jahres- und Tagesseiten, Weiterleitungen `pmbNNNN.html` → `JJJJ-MM-TT.html#pmbNNNN` (ein Durchlauf)
+  * `partials/event-card.xsl` – Ereigniskarte; jede `idno` als Link
+  * `list-of-relevant-uris.xml` – Beschriftung, Farbe und Gruppe der URI-Links (Projektkopie, Abweichungen von `schnitzler-chronik-static` stehen im Kopfkommentar)
+  * `farben.xsl` – erzeugt `html/css/farben.css` (URI- und Gruppenfarben)
+* `html/js/tag.js` – Datumssprung, „Link kopieren“, „Zitieren“; `html/js/404.js` – Tage ohne Ereignisse
 
 Die Daten-Repo-Struktur (`editions/`, `indices/` im Wurzelverzeichnis) wird von `fetch_data.sh` nach `data/` umgelegt.
 

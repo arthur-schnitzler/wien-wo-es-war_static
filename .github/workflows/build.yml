@@ -47,10 +47,8 @@ jobs:
         run: uv run pyscripts/prepare_data.py
       - name: Build the app
         run: ant
-      - name: Size report
-        run: |
-          du -sh html
-          find html -type f | wc -l
+      - name: Check output (URIs, Weiterleitungen, Kalenderdaten, Größe)
+        run: uv run pyscripts/check_output.py
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact

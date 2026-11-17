@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Projektkopie von schnitzler-chronik-static/xslt/export/list-of-relevant-uris.xml.
+Abweichungen (sollen auch upstream übernommen werden, PLANUNG.md Abschnitt 6):
+* spielplan-oper_18691945 wie in den Daten (upstream: spielplan-oper_1869–1945), gültige Farbe
+* burgtheater nur einmal
+* ergänzt: schnitzler-kino, schnitzler-mikrofilme, oeml, imdb, exemplar, wiener-rundschau,
+  tillich-briefe, freud, gtrans, wohin-in-wien-damals
+* @group (quelle, projekt, normdaten) legt die Reihenfolge auf den Ereigniskarten fest;
+  innerhalb einer Gruppe gilt die Dokumentreihenfolge. mam:idnosToLinks ignoriert @group.
+* textcolor, wo weiße Schrift auf der Farbe weniger als 4,5:1 Kontrast hätte
+Bewusst nicht aufgenommen: tmp-burgtheater (keine URL), insel (Platzhalter-Domain).
+* If URIs are links to pdfs etc. an URL can be added.
+* The Attribute @ana="multiple" denotes if several Uris for the same item shall be displayed
+-->
+<list>
+    <item group="quelle">
+        <abbr>burgtheater</abbr>
+        <caption>Burgtheater</caption>
+        <color>#02305c</color>
+    </item>
+    <item group="quelle">
+        <abbr>spielplan-oper_18691945</abbr>
+        <caption>Spielplan Oper</caption>
+        <color>#1F7A55</color>
+    </item>
+    <item group="quelle">
+        <abbr>anno</abbr>
+        <caption>ANNO Theaterzettel</caption>
+        <color>#b7422f</color>
+    </item>
+    <item group="quelle">
+        <abbr>brahms-online</abbr>
+        <caption>Brahms online</caption>
+        <color>#00ACC1</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-kultur</abbr>
+        <caption>Kulturveranstaltungen</caption>
+        <color>#6B4C5A</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-briefe</abbr>
+        <caption>Briefe mit Autorinnen und Autoren</caption>
+        <color>#A63437</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-tagebuch</abbr>
+        <caption>Tagebuch</caption>
+        <color>#037a33</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-lektueren</abbr>
+        <caption>Leseliste</caption>
+        <color>#022954</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-interviews</abbr>
+        <caption>Interviews</caption>
+        <color>#3D5A80</color>
+    </item>
+    <item ana="multiple" group="projekt">
+        <abbr>schnitzler-mikrofilme-daten</abbr>
+        <caption>Mikroverfilmung des Nachlasses</caption>
+        <color>#6e7b8b</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>wienerschnitzler</abbr>
+        <caption>Wiener Schnitzler</caption>
+        <color>#6F5106</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-fischer</abbr>
+        <caption>Schnitzler – S. Fischer</caption>
+        <color>#3D4F9F</color>
+    </item>
+    <item ana="multiple" group="projekt">
+        <abbr>schnitzler-zeitungen</abbr>
+        <caption>Zeitungsausschnitte</caption>
+        <color>#8E8575</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item type="print" group="projekt">
+        <abbr>schnitzler-traeume</abbr>
+        <caption>Traumtagebuch</caption>
+        <color>#1193CC</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item type="print" group="projekt">
+        <abbr>schnitzler-kino-buch</abbr>
+        <caption>Kino</caption>
+        <color>#B43C9C</color>
+    </item>
+    <item type="print" group="projekt">
+        <abbr>schnitzler-kempny-buch</abbr>
+        <caption>Kempny Tagebuch</caption>
+        <color>#7B3F00</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-bahr</abbr>
+        <caption>Schnitzler/Bahr</caption>
+        <color>#0369A1</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-orte</abbr>
+        <caption>Aufenthaltsorte</caption>
+        <color>#045344</color>
+    </item>
+    <item ana="multiple" group="projekt">
+        <abbr>pollaczek</abbr>
+        <caption>Pollaczek: Schnitzler und ich</caption>
+        <color>#1e81b0</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-chronik</abbr>
+        <caption>Chronik</caption>
+        <color>#008B8B</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>Arthur-Schnitzler-digital</abbr>
+        <caption>Arthur Schnitzler digital (Werke 1905–1931)</caption>
+        <color>#801e23</color>
+    </item>
+    <item group="projekt">
+        <abbr>dla-marbach</abbr>
+        <caption>DLA Marbach</caption>
+        <color>#C96E22</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>kalliope-verbund</abbr>
+        <caption>Kalliope Verbundkatalog</caption>
+        <color>#003574</color>
+    </item>
+    <item group="projekt">
+        <abbr>fackel</abbr>
+        <caption>Fackel</caption>
+        <color>#CE0F0B</color>
+    </item>
+    <item group="projekt">
+        <abbr>legalkraus</abbr>
+        <caption>Rechtsakten</caption>
+        <color>#c85545</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>dritte-walpurgisnacht</abbr>
+        <caption>Dritte Walpurgisnacht</caption>
+        <color>#a21a17</color>
+    </item>
+    <item group="projekt">
+        <abbr>bahr-textverzeichnis</abbr>
+        <caption>Bahr Textverzeichnis</caption>
+        <color>#8E4162</color>
+    </item>
+    <item group="projekt">
+        <abbr>bahr-tsn</abbr>
+        <caption>Bahr Tagebücher</caption>
+        <color>#ce0000</color>
+    </item>
+    <item group="projekt">
+        <abbr>schoenberg-ue</abbr>
+        <caption>Schönberg Universal-Edition</caption>
+        <color>#C8884A</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>wedekind-korrespondenz</abbr>
+        <caption>Wedekind-Korrespondenz</caption>
+        <color>#d4a346</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>ansorge</abbr>
+        <caption>Conrad Ansorge</caption>
+        <color>#2C3E50</color>
+    </item>
+    <item group="projekt">
+        <abbr>zweig-digital</abbr>
+        <caption>Zweig digital</caption>
+        <color>#631a34</color>
+    </item>
+    <item group="projekt">
+        <abbr>hanslick</abbr>
+        <caption>Hanslick online</caption>
+        <color>#222fa8</color>
+    </item>
+    <item group="projekt">
+        <abbr>hanslick-online</abbr>
+        <caption>Hanslick online</caption>
+        <color>#222fa8</color>
+    </item>
+    <item group="projekt">
+        <abbr>schubert-digital</abbr>
+        <caption>Schubert digital</caption>
+        <color>#1a5276</color>
+    </item>
+    <item ana="multiple" group="projekt">
+        <abbr>semantickraus</abbr>
+        <caption>Semantic Kraus</caption>
+        <color>#7D3C98</color>
+    </item>
+    <item group="projekt">
+        <abbr>sturm</abbr>
+        <caption>Sturm-Edition</caption>
+        <color>#1F618D</color>
+    </item>
+    <item group="projekt">
+        <abbr>thun-korrespondenz</abbr>
+        <caption>Thun-Korrespondenz</caption>
+        <color>#0063a6</color>
+    </item>
+    <item group="projekt">
+        <abbr>brenner</abbr>
+        <caption>Der Brenner</caption>
+        <color>#bbc168</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>schoenbach</abbr>
+        <caption>Schönbach</caption>
+        <color>#62C3D0</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item type="print-online" group="projekt">
+        <abbr>briefe_i</abbr>
+        <caption>Briefe 1875–1912</caption>
+        <url>https://shared.acdh.oeaw.ac.at/schnitzler-briefe/1981_Briefe-1875–1912.pdf</url>
+    </item>
+    <item type="print-online" group="projekt">
+        <abbr>briefe_ii</abbr>
+        <caption>Briefe 1913–1931</caption>
+        <url>https://shared.acdh.oeaw.ac.at/schnitzler-briefe/1984_Briefe-1913–1931.pdf</url>
+    </item>
+    <item type="print-online" group="projekt">
+        <abbr>jugend-in-wien</abbr>
+        <caption>Jugend in Wien</caption>
+        <url>http://www.zeno.org/Literatur/M/Schnitzler,+Arthur/Autobiographisches/Jugend+in+Wien</url>
+    </item>
+    <item group="projekt">
+        <abbr>auden-musulin-papers</abbr>
+        <caption>Auden-Musulin</caption>
+        <color>#b59890</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>schaubuehne</abbr>
+        <caption>Die Schaubühne</caption>
+        <color>#11759a</color>
+    </item>
+    <item group="projekt">
+        <abbr>wiengeschichtewiki</abbr>
+        <caption>Wien Geschichte Wiki</caption>
+        <color>#6F6938</color>
+    </item>
+    <item group="projekt">
+        <abbr>oebl</abbr>
+        <caption>ÖBL</caption>
+        <color>#a50021</color>
+    </item>
+    <item type="print" group="projekt">
+        <abbr>schnitzler-cmif</abbr>
+        <caption>Gedruckte Briefwechsel</caption>
+        <color>#654321</color>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-chronik-manuell</abbr>
+        <caption>Ergänzungen</caption>
+        <color>#AAAAFA</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>schnitzler-kino</abbr>
+        <caption>Schnitzler: Kino</caption>
+        <color>#B43C9C</color>
+    </item>
+    <item ana="multiple" group="projekt">
+        <abbr>schnitzler-mikrofilme</abbr>
+        <caption>Mikroverfilmung des Nachlasses</caption>
+        <color>#6e7b8b</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>oeml</abbr>
+        <caption>Oesterreichisches Musiklexikon</caption>
+        <color>#8A1538</color>
+    </item>
+    <item group="projekt">
+        <abbr>imdb</abbr>
+        <caption>IMDb</caption>
+        <color>#F5C518</color>
+        <textcolor>#000000</textcolor>
+    </item>
+    <item group="projekt">
+        <abbr>exemplar</abbr>
+        <caption>Digitalisat</caption>
+        <color>#5A5A5A</color>
+    </item>
+    <item group="projekt">
+        <abbr>wiener-rundschau</abbr>
+        <caption>Wiener Rundschau</caption>
+        <color>#7A4E2D</color>
+    </item>
+    <item group="projekt">
+        <abbr>tillich-briefe</abbr>
+        <caption>Tillich-Briefe</caption>
+        <color>#3B5B7A</color>
+    </item>
+    <item group="projekt">
+        <abbr>freud</abbr>
+        <caption>Freud-Edition</caption>
+        <color>#4B3F72</color>
+    </item>
+    <item group="projekt">
+        <abbr>gtrans</abbr>
+        <caption>German Translations</caption>
+        <color>#2E6F73</color>
+    </item>
+    <item group="projekt">
+        <abbr>wohin-in-wien-damals</abbr>
+        <caption>Wohin in Wien damals</caption>
+        <color>#8C2F39</color>
+    </item>
+    <item group="normdaten">
+        <abbr>pmb</abbr>
+        <caption>PMB</caption>
+        <color>#9B5F98</color>
+    </item>
+    <item group="normdaten">
+        <abbr>gnd</abbr>
+        <caption>GND</caption>
+        <color>#006AB3</color>
+    </item>
+    <item group="normdaten">
+        <abbr>wikidata</abbr>
+        <caption>Wikidata</caption>
+        <color>#0645ad</color>
+    </item>
+    <item group="normdaten">
+        <abbr>wikipedia</abbr>
+        <caption>Wikipedia</caption>
+        <color>#36c</color>
+    </item>
+    <item group="normdaten">
+        <abbr>geonames</abbr>
+        <caption>geoNames</caption>
+        <color>#363</color>
+    </item>
+</list>

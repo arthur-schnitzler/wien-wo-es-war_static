@@ -8,8 +8,10 @@ data/imprint.xml
 data/indices/listevent.xml
 data/indices/tage.xml
 data/indices/mehrtaegig.xml
+data/indices/ereignistypen.xml
 html/js-data/
 html/sitemap.xml
+html/css/farben.css
 wohin-in-wien-damals_data/
 
 data/indices/*.xml

@@ -32,6 +32,8 @@ JS_DATA = ROOT / "html" / "js-data"
 TEI_NS = "http://www.tei-c.org/ns/1.0"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 NS = {"tei": TEI_NS, "xml": "http://www.w3.org/XML/1998/namespace"}
+# Namensraum für projekteigene Zusatzattribute in data/indices/listevent.xml
+WIW_NS = "https://wohin-in-wien-damals.acdh.oeaw.ac.at/ns"
 
 # Typ für Ereignisse ohne eventName/@n (PLANUNG.md, Datenhinweise)
 TYP_OHNE_ANGABE = "Veranstaltung"
@@ -257,7 +259,7 @@ def schreibe_xml(pfad, root):
 
 
 def tei_kopf(titel):
-    root = etree.Element(tei("TEI"), nsmap={None: TEI_NS})
+    root = etree.Element(tei("TEI"), nsmap={None: TEI_NS, "wiw": WIW_NS})
     header = etree.SubElement(root, tei("teiHeader"))
     fd = etree.SubElement(header, tei("fileDesc"))
     ts = etree.SubElement(fd, tei("titleStmt"))
@@ -305,8 +307,16 @@ def main():
         tree = etree.parse(str(datei), parser)
         ereignisse = []
         for ev in tree.iterfind(".//tei:listEvent/tei:event", NS):
-            gesamt_list.append(etree.fromstring(etree.tostring(ev)))
             d = ereignis_daten(ev, typen, urheber_von, fehlende_typen)
+            # Kopie für listevent.xml, ergänzt um Anzeigetitel (ohne Datum), Typ und Gruppe,
+            # damit die Stylesheets diese Logik nicht wiederholen müssen
+            kopie = etree.fromstring(etree.tostring(ev))
+            kopie.set(f"{{{WIW_NS}}}titel", d.get("titel", ""))
+            kopie.set(f"{{{WIW_NS}}}typ", d["typ"])
+            kopie.set(f"{{{WIW_NS}}}gruppe", typen.get(d["typ"], ""))
+            if d.get("unbestimmt"):
+                kopie.set(f"{{{WIW_NS}}}unbestimmt", "true")
+            gesamt_list.append(kopie)
             ereignisse.append(d)
             if d["typ"] in typen:
                 pro_tag[d["datum"]][typen[d["typ"]]] += 1
@@ -371,6 +381,22 @@ def main():
         JS_DATA / "kalender" / "uebersicht.json", uebersicht
     )
     schreibe_json(JS_DATA / "ereignistypen.json", {"gruppen": gruppen, "typen": typen})
+
+    # dieselbe Zuordnung als XML für die Stylesheets
+    et_root = etree.Element("ereignistypen")
+    for g in gruppen:
+        g_el = etree.SubElement(
+            et_root,
+            "gruppe",
+            id=g["id"],
+            reihenfolge=str(g["reihenfolge"]),
+            farbe=g["farbe"],
+        )
+        etree.SubElement(g_el, "label").text = g["label"]
+        for typ, gid in typen.items():
+            if gid == g["id"]:
+                etree.SubElement(g_el, "typ").text = typ
+    schreibe_xml(INDICES / "ereignistypen.xml", et_root)
 
     schreibe_xml(INDICES / "listevent.xml", gesamt)
 

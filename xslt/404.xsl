@@ -4,7 +4,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="2.0"
-    exclude-result-prefixes="xsl tei xs">
+    exclude-result-prefixes="#all">
 
     <xsl:import href="./partials/html_head.xsl"/>
     <xsl:import href="./partials/html_navbar.xsl"/>
@@ -14,12 +14,12 @@
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select='"404 - Page not found"'/>
+            <xsl:value-of select='"Seite nicht gefunden"'/>
         </xsl:variable>
         <html class="h-100" lang="{$default_lang}">
             <head>
                 <xsl:call-template name="html_head">
-                    <xsl:with-param name="html_title" select="$doc_title"></xsl:with-param>
+                    <xsl:with-param name="html_title" select="concat($doc_title, ' – ', $project_short_title)"></xsl:with-param>
                 </xsl:call-template>
             </head>            
             <body class="d-flex flex-column h-100">
@@ -38,10 +38,15 @@
                         </ol>
                     </nav>
                     <div class="container">
-                        <h1>404</h1>
+                        <!-- js/404.js ersetzt den Inhalt, wenn die Adresse ein Datum ist (JJJJ-MM-TT.html) -->
+                        <div id="fehler-inhalt">
+                            <h1>Seite nicht gefunden</h1>
+                            <p>Diese Seite gibt es nicht. Weiter zur <a href="index.html">Startseite</a>, zum <a href="kalender.html">Kalender</a> oder zur <a href="jahre.html">Übersicht aller Jahre</a>.</p>
+                        </div>
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
+                <script src="js/404.js"></script>
             </body>
         </html>
     </xsl:template>
