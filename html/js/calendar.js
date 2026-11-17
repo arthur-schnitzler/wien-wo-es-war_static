@@ -62,11 +62,18 @@
     const n = parseInt(hex.slice(1), 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
-  // Farbe mit Weiß gemischt (t = Anteil Weiß); dazu passende Schriftfarbe
+  // relative Leuchtdichte nach WCAG 2
+  function leuchtdichte(c) {
+    const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+  }
+  // Farbe mit Weiß gemischt (t = Anteil Weiß); Schrift weiß oder schwarz, je nachdem was mehr Kontrast hat
   function heat(hex, t) {
     const c = hexRgb(hex).map((v) => Math.round(v + (255 - v) * t));
-    const lum = (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255;
-    return { bg: "rgb(" + c.join(",") + ")", fg: lum < 0.6 ? "#fff" : "#000" };
+    const l = leuchtdichte(c);
+    const weiss = 1.05 / (l + 0.05);
+    const schwarz = (l + 0.05) / 0.05;
+    return { bg: "rgb(" + c.join(",") + ")", fg: weiss >= schwarz ? "#fff" : "#000" };
   }
 
   /* ---------- Kalender ---------- */

@@ -2,6 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:mam="whatever" exclude-result-prefixes="xs" version="2.0">
+    <!-- Projektkopie von schnitzler-chronik-static/xslt/export/LOD-idnos.xsl. Abweichung:
+    Modals für Mehrfachlinks nur, wenn die Entität mindestens zwei Links des Typs hat; gültige,
+    eindeutige ids (modal-ABBR, modal-ABBR-titel) statt der Beschriftung bzw. „exampleModalLabel“.
+    -->
     <!-- This function gets as input a node with idnos as child element
     and checks them against the file of desired idnos and gives links
     as output
@@ -41,7 +45,7 @@
                             <xsl:text>modal</xsl:text>
                         </xsl:attribute>
                         <xsl:attribute name="data-bs-target">
-                            <xsl:value-of select="concat('#', $pill/caption)"/>
+                            <xsl:value-of select="concat('#modal-', replace($abbr, '[^A-Za-z0-9_-]', '_'))"/>
                         </xsl:attribute>
                         <xsl:value-of select="$pill/caption"/>
                     </xsl:element>
@@ -94,20 +98,21 @@
         </xsl:for-each>
         <!-- wenn es mehrere Idnos anzuzeigen gibt, wird die Auswahl als Modal gezeigt, deswegen werden
         für alle @ana='multiple' modals angelegt-->
-        <xsl:for-each select="$relevant-uris/descendant::item[not(@type) and @ana = 'multiple']">
+        <xsl:for-each select="$relevant-uris/descendant::item[not(@type) and @ana = 'multiple'][$idnos-of-current/descendant::tei:idno[@subtype = current()/abbr][2]]">
             <xsl:variable name="pill" as="node()">
                 <item>
                     <xsl:copy-of select="child::*"/>
                 </item>
             </xsl:variable>
             <xsl:variable name="abbr" select="child::abbr" as="xs:string"/>
-            <div class="modal fade modal-sm" id="{$pill/caption}" tabindex="-1" focus="true"
-                keyboard="true" aria-labelledby="{$pill/caption}" aria-hidden="true"
+            <xsl:variable name="modal-id" select="concat('modal-', replace($abbr, '[^A-Za-z0-9_-]', '_'))"/>
+            <div class="modal fade modal-sm" id="{$modal-id}" tabindex="-1" focus="true"
+                keyboard="true" aria-labelledby="{$modal-id}-titel" aria-hidden="true"
                 data-bs-backdrop="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Mehrfache Links</h5>
+                            <h5 class="modal-title" id="{$modal-id}-titel">Mehrfache Links</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Schließen"/>
                         </div>
