@@ -1,175 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    version="2.0"
-    exclude-result-prefixes="xsl tei xs">
-    
-    <xsl:import href="./partials/html_navbar.xsl"/>
+<!-- Ortsregister mit Karte der Spielstätten, Ortsseiten -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:mam="whatever" exclude-result-prefixes="#all" version="3.0">
     <xsl:import href="./partials/html_head.xsl"/>
+    <xsl:import href="./partials/html_navbar.xsl"/>
     <xsl:import href="./partials/html_footer.xsl"/>
-    <xsl:import href="./partials/entities.xsl"/>
-    <xsl:import href="./partials/blockquote.xsl"/>
-    <xsl:import href="./partials/zotero.xsl"/>
-    <xsl:import href="./partials/datatables_import.xsl"/>
-    <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
+    <xsl:import href="./partials/entities-local.xsl"/>
+    <xsl:import href="./partials/register.xsl"/>
+    <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="no" omit-xml-declaration="yes"/>
 
+    <!-- eigene Koordinaten, sonst die des übergeordneten Ortes; als (lat, lng) -->
+    <xsl:function name="mam:koordinaten" as="xs:double*">
+        <xsl:param name="p" as="element(tei:place)"/>
+        <xsl:variable name="geo" select="normalize-space((($p/tei:location[@type = 'coords']/tei:geo), $p/tei:location/tei:geo)[1])"/>
+        <xsl:sequence select="
+                if (matches($geo, '^-?\d+(,\d+)? -?\d+(,\d+)?$')) then
+                    for $t in tokenize($geo, ' ') return xs:double(replace($t, ',', '.'))
+                else
+                    ()"/>
+    </xsl:function>
 
     <xsl:template match="/">
-        <xsl:variable name="doc_title">
-            <xsl:value-of select=".//tei:titleStmt/tei:title[1]/text()"/>
-        </xsl:variable>
-        <xsl:variable name="link" select="'listplace.html'"/>
-        <html class="h-100" lang="{$default_lang}">
-            <head>
-                <xsl:call-template name="html_head">
-                    <xsl:with-param name="html_title" select="$doc_title"></xsl:with-param>
-                </xsl:call-template>
-                <xsl:call-template name="zoterMetaTags">
-                    <xsl:with-param name="pageId" select="$link"></xsl:with-param>
-                    <xsl:with-param name="zoteroTitle" select="$doc_title"></xsl:with-param>
-                </xsl:call-template>
-                <xsl:call-template name="datatables_import"/>
+        <xsl:variable name="orte" select="//tei:listPlace/tei:place[@xml:id]"/>
+        <xsl:call-template name="registerseite">
+            <xsl:with-param name="titel" select="'Orte'"/>
+            <xsl:with-param name="einleitung">
+                <p>
+                    <xsl:value-of select="count($orte)"/>
+                    <xsl:text> Orte, an denen Ereignisse stattgefunden haben. Die Karte zeigt die Spielstätten, die Größe der Punkte die Anzahl der Ereignisse.</xsl:text>
+                </p>
+            </xsl:with-param>
+            <xsl:with-param name="vorher">
+                <div id="spielstaetten-karte" class="mb-4" style="height: 60vh; min-height: 320px;"
+                    role="region" aria-label="Karte der Spielstätten"></div>
+                <script id="spielstaetten-daten" type="application/json">
+                    <xsl:text>[</xsl:text>
+                    <xsl:for-each select="$orte[tei:ereignisse(.) gt 0][count(mam:koordinaten(.)) = 2]">
+                        <xsl:variable name="k" select="mam:koordinaten(.)"/>
+                        <xsl:if test="position() gt 1">,</xsl:if>
+                        <xsl:value-of select="concat('[', $k[1], ',', $k[2], ',&quot;', replace(normalize-space(tei:placeName[1]), '&quot;', '\\&quot;'), '&quot;,&quot;', @xml:id, '&quot;,', tei:ereignisse(.), ']')"/>
+                    </xsl:for-each>
+                    <xsl:text>]</xsl:text>
+                </script>
+            </xsl:with-param>
+            <xsl:with-param name="tabelle">
+                <table id="register" class="table table-sm" data-sortierung="ereignisse">
+                    <thead>
+                        <tr>
+                            <th tabulator-field="name" tabulator-formatter="html" tabulator-headerFilter="input" tabulator-minWidth="250">Name</th>
+                            <th tabulator-field="art" tabulator-headerFilter="input">Art</th>
+                            <th tabulator-field="ereignisse" tabulator-sorter="number" tabulator-hozAlign="right" tabulator-width="120">Ereignisse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <xsl:for-each select="$orte">
+                            <tr>
+                                <td>
+                                    <span hidden="hidden">
+                                        <xsl:value-of select="normalize-space(tei:placeName[1])"/>
+                                    </span>
+                                    <a href="{@xml:id}.html">
+                                        <xsl:value-of select="normalize-space(tei:placeName[1])"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <xsl:value-of select="replace(normalize-space(tei:desc[@type = 'entity_type'][1]), '\s*\([^)]*\)$', '')"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of select="tei:ereignisse(.)"/>
+                                </td>
+                            </tr>
+                        </xsl:for-each>
+                    </tbody>
+                </table>
+            </xsl:with-param>
+            <xsl:with-param name="skripte" as="element()*">
                 <link rel="stylesheet" href="vendor/leaflet/leaflet.css"/>
-                <link rel="stylesheet"
-                    href="vendor/leaflet.markercluster/MarkerCluster.css"/>
-                <link rel="stylesheet"
-                    href="vendor/leaflet.markercluster/MarkerCluster.Default.css"/>
-                <script src="vendor/leaflet/leaflet.js"/>
-                <script src="vendor/leaflet.markercluster/leaflet.markercluster.js"/>
-            </head>
-            
-            <body class="d-flex flex-column h-100">
-                <xsl:call-template name="nav_bar"/>
-                <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="index.html">
-                                    <xsl:value-of select="$project_short_title"/>
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <xsl:value-of select="$doc_title"/>
-                            </li>
-                        </ol>
-                    </nav>
-                    <div class="container">
-                        <h1>
-                            <xsl:value-of select="$doc_title"/>
-                        </h1>
-                        <div id="map"></div>
-                        <div id="custom-info-box" class="text-muted small text-center"></div>
-                        <table id="myTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Ortsname</th>
-                                    <th scope="col">lat</th>
-                                    <th scope="col">lng</th>
-                                    <th scope="col" data-dt-visible="false">ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <xsl:for-each select=".//tei:place[@xml:id]">
-                                    <xsl:variable name="id">
-                                        <xsl:value-of select="data(@xml:id)"/>
-                                    </xsl:variable>
-                                    <!-- eigene Koordinaten, sonst die des übergeordneten Ortes -->
-                                    <xsl:variable name="geo" select="(tei:location[@type = 'coords']/tei:geo, tei:location/tei:geo)[1]"/>
-                                    <tr>
-                                        <td>
-                                            <a href="{$id||'.html'}">
-                                                <xsl:value-of select="normalize-space(tei:placeName[1])"/>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <xsl:value-of select="replace(tokenize(normalize-space($geo), ' ')[1], ',', '.')"/>
-                                        </td>
-                                        <td>
-                                            <xsl:value-of select="replace(tokenize(normalize-space($geo), ' ')[last()], ',', '.')"/>
-                                        </td>
-                                        <td>
-                                            <xsl:value-of select="$id"/>
-                                        </td>
-                                    </tr>
-                                </xsl:for-each>
-                            </tbody>
-                        </table>
-                        <div class="text-center p-4">
-                            <xsl:call-template name="blockquote">
-                                <xsl:with-param name="pageId" select="'listplace.html'"/>
-                            </xsl:call-template>
-                        </div>
-                    </div>
-                </main>
-                <xsl:call-template name="html_footer"/>
-                <script src="js/datatables_custom/datatables_custom.js"></script>
-                <script src="js/maptable.js"></script>
-            </body>
-        </html>
-        <xsl:for-each select=".//tei:place[@xml:id]">
-            <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
-            <xsl:variable name="name" select="normalize-space(string-join(./tei:placeName[1]//text()))"></xsl:variable>
-            <xsl:result-document href="{$filename}">
-                <html class="h-100" lang="{$default_lang}">
-                    <head>
-                        <xsl:call-template name="html_head">
-                            <xsl:with-param name="html_title" select="$name"></xsl:with-param>
-                        </xsl:call-template>
-                        <xsl:call-template name="zoterMetaTags">
-                            <xsl:with-param name="pageId" select="$filename"></xsl:with-param>
-                            <xsl:with-param name="zoteroTitle" select="$name"></xsl:with-param>
-                        </xsl:call-template>
-                    </head>
-
-                    <body class="d-flex flex-column h-100">
-                        <xsl:call-template name="nav_bar"/>
-                        <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
-                            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="index.html"><xsl:value-of select="$project_short_title"/></a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="listplace.html"><xsl:value-of select="$doc_title"/></a>
-                                    </li>
-                                </ol>
-                            </nav>
-                            <div class="container">
-                                <h1>
-                                    <xsl:value-of select="$name"/>
-                                </h1>
-                                <xsl:call-template name="place_detail"/>
-                                <xsl:if test="./tei:location/tei:geo">
-                                    <div id="map_detail"/>
-                                </xsl:if>
-                                <div class="text-center p-4">
-                                    <xsl:call-template name="blockquote">
-                                        <xsl:with-param name="pageId" select="$filename"/>
-                                    </xsl:call-template>
-                                </div>
-                            </div>
-                        </main>
-                        <xsl:call-template name="html_footer"/>
-                        <xsl:if test="./tei:location/tei:geo">
-                            <link rel="stylesheet" href="vendor/leaflet/leaflet.css"/>
-                            <script src="vendor/leaflet/leaflet.js"></script>
-                            <script>
-                                var lat = <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo[1]/text(), ' ')[1], ',', '.')"/>;
-                                var long = <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo[1]/text(), ' ')[2], ',', '.')"/>;
-                                $("#map_detail").css("height", "500px");
-                                var map = L.map('map_detail').setView([Number(lat), Number(long)], 13);
-                                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19,
-                                attribution: '&amp;copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                }).addTo(map);
-                                var marker = L.marker([Number(lat), Number(long)]).addTo(map);
-                            </script>
-                        </xsl:if>
-                    </body>
-                </html>
-            </xsl:result-document>
+                <script src="vendor/leaflet/leaflet.js"></script>
+                <script src="js/spielstaetten.js"></script>
+            </xsl:with-param>
+        </xsl:call-template>
+        <xsl:for-each select="$orte">
+            <xsl:call-template name="entitaetsseite">
+                <xsl:with-param name="name" select="normalize-space(tei:placeName[1])"/>
+            </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>

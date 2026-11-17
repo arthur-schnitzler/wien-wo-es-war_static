@@ -274,6 +274,104 @@ def tei_kopf(titel):
     return root
 
 
+REGISTER = {
+    "listperson.xml": "person",
+    "listplace.xml": "place",
+    "listorg.xml": "org",
+    "listbibl.xml": "bibl",
+}
+REZENSION = "wird rezensiert in"
+
+
+def anzeigetitel(d, namen):
+    """Titel wie auf der Ereigniskarte: ein einzelnes (nicht rezensiertes) Werk, sonst eventName ohne Datum."""
+    werke = [w for w, rel in d.get("werke", []) if rel != REZENSION]
+    if len(werke) == 1:
+        return namen.get(werke[0], d.get("titel", ""))
+    return d.get("titel") or d["typ"]
+
+
+def schreibe_erwaehnungen(jahre, namen):
+    """Ergänzt die Registerkopien in data/indices/ um die Ereignisse jeder Entität.
+
+    Pro Entität ein <noteGrp type="ereignisse"> mit <note type="mentions" target="JJJJ-MM-TT.html#pmbNNNN"
+    corresp="JJJJ-MM-TT">Titel, Ort</note>; entfernt die listEvent der Register. So zeigt entities.xsl die
+    Ereignisse im Normalmodus an
+    (ohne Suche über alle Ereignisse). Personen: beteiligt (subtype="beteiligt") oder Urheber:in
+    eines aufgeführten Werks (subtype="urheber").
+    """
+    erw = defaultdict(dict)  # key -> {event_id: (datum, text, subtype)}
+    for ereignisse in jahre.values():
+        for d in ereignisse:
+            titel = anzeigetitel(d, namen)
+            ort = next((namen.get(o, "") for o in d.get("orte", [])), "")
+            mit_ort = f"{titel}, {ort}" if ort else titel
+            eintraege = (
+                [(o, titel, None) for o in d.get("orte", [])]
+                + [(i, mit_ort, None) for i in d.get("institutionen", [])]
+                + [(w, mit_ort, None) for w, _ in d.get("werke", [])]
+                + [(p, mit_ort, "beteiligt") for p, _ in d.get("personen", [])]
+                + [(p, mit_ort, "urheber") for p, _ in d.get("urheber", [])]
+            )
+            for key, text, subtype in eintraege:
+                erw[key].setdefault(d["id"], (d["datum"], text, subtype))
+
+    anzahl = Counter()
+    url_korrekturen = []
+    for datei, element in REGISTER.items():
+        pfad = INDICES / datei
+        tree = etree.parse(str(pfad))
+        for alt in tree.iterfind(".//tei:noteGrp[@type='ereignisse']", NS):
+            alt.getparent().remove(alt)
+        # listEvent in den Registern (PMB-Relationen zu Ereignissen, auch außerhalb der Auswahl)
+        # ersetzt die Liste oben; entities.xsl würde sie sonst als „Relationen“ doppelt zeigen
+        for alt in tree.xpath(f"//tei:{element}/tei:listEvent", namespaces=NS):
+            alt.getparent().remove(alt)
+        # offensichtliche URL-Fehler aus der PMB abfangen (Datenhinweise in PLANUNG.md)
+        for u in tree.xpath(
+            "//tei:idno[@type='URL'] | //tei:title[starts-with(@type, 'werk_link')]",
+            namespaces=NS,
+        ):
+            alt = (u.text or "").strip()
+            neu = re.sub(r"^ttps?://", lambda m: "h" + m.group(0), alt)
+            # nur ergänzen, wo eine Domain erkennbar ist (tmp-burgtheater u. Ä. sind keine URLs)
+            if re.match(r"^[\w-]+(\.[\w-]+)+(/|$)", neu):
+                neu = "https://" + neu
+            neu = neu.replace(" ", "%20")
+            if neu != alt:
+                url_korrekturen.append((datei, alt, neu))
+                u.text = neu
+        for el in tree.iterfind(f".//tei:{element}", NS):
+            key = el.get(XML_ID)
+            if not key or key not in erw:
+                continue
+            grp = etree.SubElement(el, tei("noteGrp"), type="ereignisse")
+            for eid, (datum, text, subtype) in sorted(
+                erw[key].items(), key=lambda x: (x[1][0], x[0])
+            ):
+                note = etree.SubElement(
+                    grp,
+                    tei("note"),
+                    type="mentions",
+                    target=f"{datum}.html#{eid}",
+                    corresp=datum,
+                )
+                if subtype:
+                    note.set("subtype", subtype)
+                note.text = text
+                anzahl[datei] += 1
+        tree.write(str(pfad), encoding="UTF-8", xml_declaration=True)
+    for datei, alt, neu in url_korrekturen:
+        if not alt.startswith("https://brahms-online"):
+            print(f"URL korrigiert ({datei}): {alt} → {neu}")
+    brahms = sum(
+        1 for _, alt, _ in url_korrekturen if alt.startswith("https://brahms-online")
+    )
+    if brahms:
+        print(f"URL korrigiert: {brahms} Brahms-online-Links mit Leerzeichen kodiert")
+    return anzahl
+
+
 def lies_uri_liste():
     """xslt/list-of-relevant-uris.xml als {subtype: [Beschriftung, Rang]}; Rang wie auf den Karten."""
     rang_gruppe = {"quelle": 1, "projekt": 2, "normdaten": 4}
@@ -441,6 +539,7 @@ def main():
     schreibe_xml(INDICES / "ereignistypen.xml", et_root)
 
     schreibe_xml(INDICES / "listevent.xml", gesamt)
+    erwaehnungen = schreibe_erwaehnungen(jahre, namen)
 
     # tage.xml: jeder Tag, an dem ein Ereignis beginnt oder ein Ereignis mit Zeitraum läuft
     tage_root = etree.Element("tage")
@@ -471,6 +570,10 @@ def main():
         sys.exit(
             f"Summe in uebersicht.json ({summe_uebersicht}) ≠ Anzahl der Ereignisse ({anzahl})"
         )
+    print(
+        "Ereignisse in den Registern: "
+        + ", ".join(f"{datei} {n}" for datei, n in erwaehnungen.items())
+    )
     groesstes = max(gzip_groessen, key=gzip_groessen.get)
     print(f"{anzahl} Ereignisse in {len(jahre)} Jahresdateien")
     print(

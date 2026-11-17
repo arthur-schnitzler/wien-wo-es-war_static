@@ -41,6 +41,8 @@ jobs:
         uses: actions/checkout@v7
       - name: set up uv (Python)
         uses: astral-sh/setup-uv@v10.3.0
+      - name: Sync entity assets from schnitzler-chronik-static
+        run: python3 check_entities_xsl.py
       - name: Fetch the data
         run: ./shellscripts/fetch_data.sh
       - name: Prepare data (listevent.xml, tage.xml, Kalender-JSON)

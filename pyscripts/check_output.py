@@ -10,7 +10,7 @@ Fehler (Exit-Code 1):
 
 Warnungen (mit --streng ebenfalls Fehler):
 - interne Links auf nicht vorhandene Dateien
-- Größe der Site ab 800 MB
+- Größe der Site ab 800 MB, HTML-Seiten über 1 MB
 
 Aufruf: uv run pyscripts/check_output.py [--streng]
 """
@@ -202,6 +202,15 @@ def main():
     print(f"Größe: {groesse / 1e6:.0f} MB in {len(dateien)} Dateien")
     for p in sorted(dateien, key=lambda p: p.stat().st_size, reverse=True)[:5]:
         print(f"  {p.stat().st_size / 1024:8.0f} KB  {p.relative_to(HTML)}")
+    zu_gross = [
+        p.name
+        for p in dateien
+        if p.suffix == ".html" and p.stat().st_size > 1024 * 1024
+    ]
+    if zu_gross:
+        warnungen.append(
+            f"{len(zu_gross)} Seiten größer als 1 MB: {', '.join(zu_gross[:5])}"
+        )
     if groesse / 1e6 > WARNGRENZE_MB:
         warnungen.append(f"Site größer als {WARNGRENZE_MB} MB")
 
