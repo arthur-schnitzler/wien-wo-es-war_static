@@ -55,7 +55,11 @@
                 <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
                     <div class="container py-4">
                         <xsl:call-template name="one_time_alert"/>
-                        <h1><xsl:value-of select="$doc_title"/></h1>
+                        <h1 class="startlogo mb-3">
+                            <img src="images/logo-640.jpg" srcset="images/logo-640.jpg 640w, images/logo.jpg 1260w"
+                                sizes="(max-width: 700px) 100vw, 640px" width="640" height="337"
+                                alt="Wohin in Wien damals, 1860–1939" class="img-fluid"/>
+                        </h1>
                         <p class="lead">
                             <xsl:text>Kulturelle Ereignisse in Wien </xsl:text>
                             <xsl:value-of select="$start-year"/>

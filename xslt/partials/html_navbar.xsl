@@ -8,7 +8,8 @@
         <header>
             <nav aria-label="Hauptnavigation" class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                        <img src="{$project_symbol}" alt="" width="32" height="32" class="rounded-1"/>
                         <xsl:value-of select="$project_short_title"/>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Navigation ein-/ausblenden">
