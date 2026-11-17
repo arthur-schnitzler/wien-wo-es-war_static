@@ -1,46 +1,31 @@
-/* Algolia search */
-
-.ais-Hits-item {
-  border-radius: 0.25rem;
+/* Suche (js/search.js) */
+.suche-facetten .ais-Panel {
+    margin-bottom: 1.25rem;
 }
 
-.ais-Hits-item:hover {
-  background-color: rgba(84, 160, 183, 0.16);
+.suche-facetten .ais-Panel-header {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid var(--bs-border-color);
+    padding-bottom: 0.2rem;
 }
 
-.ais-Panel-header {
-  cursor: pointer;
-  position: relative;
-  z-index: 10;
+.suche-facetten .ais-RefinementList-labelText {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.ais-Panel-collapseButton {
-  z-index: 20;
-  inset: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: right;
+.suche-facetten .ais-RangeInput-input {
+    width: 5.5rem;
 }
 
-.ais-ClearRefinements-button {
-  background: rgba(84, 160, 183);  
+.ais-Highlight-highlighted {
+    background: #fff3b0;
+    color: inherit;
+    padding: 0;
 }
 
-.ais-ClearRefinements .ais-ClearRefinements-button:hover {
-  color: white  
-}
-
-.ais-CurrentRefinements-category .ais-CurrentRefinements-delete:hover {
-  color: red
-}
-
-.ais-ClearRefinements-button--disabled {
-	 visibility: hidden;
-}
-
-.sticky-sidebar {
-  position: sticky; 
-  top: 20px; 
-  max-height: calc(100vh - 40px); 
-  overflow-y: auto
+#hits .kal-karte {
+    font-size: 0.95rem;
 }

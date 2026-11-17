@@ -14,8 +14,13 @@ Voraussetzungen: Java, Ant, [uv](https://docs.astral.sh/uv/).
 ./shellscripts/fetch_data.sh        # Daten klonen nach data/, datahash.txt, Impressum
 uv run pyscripts/prepare_data.py    # listevent.xml, tage.xml, mehrtaegig.xml, Kalender-JSON
 ant                                 # alle Seiten nach html/
+uv run pyscripts/make_sitemap.py    # html/sitemap.xml
 uv run pyscripts/check_output.py    # Prüfung: jede URI auf ihrer Tagesseite verlinkt u. a.
 ```
+
+Suche: `uv run pyscripts/make_ts_index.py` importiert die Ereignisse nach Typesense (Umgebungsvariablen `TYPESENSE_HOST`, `TYPESENSE_PORT`, `TYPESENSE_PROTOCOL`, `TYPESENSE_API_KEY` mit Admin-Rechten); mit `--jsonl datei.jsonl` nur die Dokumente schreiben. Host und Search-only-Key für die Oberfläche stehen oben in `html/js/search.js`.
+
+Bis zum Start setzt `noindex` in `xslt/partials/params.xsl` auf allen Seiten `<meta name="robots" content="noindex, nofollow">`.
 
 Teilbuilds: `ant seiten`, `ant tage`, `ant register`, `ant entitaeten` (siehe `build.xml`).
 

@@ -49,6 +49,11 @@ jobs:
         run: uv run pyscripts/prepare_data.py
       - name: Build the app
         run: ant
+      - name: Sitemap
+        run: uv run pyscripts/make_sitemap.py
+      - name: Typesense-Index (nur mit Secret TYPESENSE_API_KEY)
+        if: ${{ env.TYPESENSE_API_KEY != '' }}
+        run: uv run pyscripts/make_ts_index.py
       - name: Check output (URIs, Weiterleitungen, Kalenderdaten, Größe)
         run: uv run pyscripts/check_output.py
       - name: Setup Pages

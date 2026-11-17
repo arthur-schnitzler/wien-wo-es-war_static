@@ -21,6 +21,8 @@
     <!-- für Zitiervorschlag und Zotero; Herausgeber:innen noch offen -->
     <xsl:param name="herausgeber" select="''"/>
     <xsl:param name="publikationsjahr" select="'2026'"/>
+    <!-- bis zum Start nicht indexieren (PLANUNG.md, Abschnitt 10: avoid_google_indexing); zum Start auf false() -->
+    <xsl:param name="noindex" select="true()"/>
     <!-- Zeitraum der Daten -->
     <xsl:param name="start-year" select="1860"/>
     <xsl:param name="end-year" select="1939"/>

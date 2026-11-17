@@ -11,6 +11,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="{$project_logo}" sizes="any" />
         <title><xsl:value-of select="$html_title"/></title>
+        <xsl:if test="$noindex">
+            <meta name="robots" content="noindex, nofollow"/>
+        </xsl:if>
 
         <!-- <link rel="canonical" href="{$base_url}" /> -->
         <meta name="description" content="{$project_title}" />
