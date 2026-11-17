@@ -70,7 +70,7 @@
         <p id="{generate-id()}"><xsl:apply-templates/></p>
     </xsl:template>
     <xsl:template match="tei:div">
-        <div id="{generate-id()}"><xsl:apply-templates/></div>
+        <div id="{(@xml:id, generate-id())[1]}"><xsl:apply-templates/></div>
     </xsl:template>
     <xsl:template match="tei:head">
         <h2 class="fs-4 mt-4"><xsl:apply-templates/></h2>

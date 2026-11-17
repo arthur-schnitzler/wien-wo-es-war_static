@@ -16,10 +16,13 @@
     <xsl:param name="base_url">https://wohin-in-wien-damals.acdh.oeaw.ac.at</xsl:param>
     <xsl:param name="data_repo">https://github.com/arthur-schnitzler/wohin-in-wien-damals_data</xsl:param>
     <xsl:param name="current-edition" select="'wohin-in-wien-damals'"/>
-    <!-- vorläufig, Projektfarbe offen (PLANUNG.md, Abschnitt 13) -->
-    <xsl:param name="current-colour" select="'#8C2F39'"/>
-    <!-- für Zitiervorschlag und Zotero; Herausgeber:innen noch offen -->
-    <xsl:param name="herausgeber" select="''"/>
+    <xsl:param name="current-colour" select="'#7A1C1C'"/>
+    <!-- Lizenz der Daten auf der Website -->
+    <xsl:param name="lizenz-name" select="'CC BY 4.0'"/>
+    <xsl:param name="lizenz-url" select="'https://creativecommons.org/licenses/by/4.0/deed.de'"/>
+    <!-- für Zitiervorschlag (Fließtext) und Zotero (citation_editors: Nachname, Vorname; …) -->
+    <xsl:param name="herausgeber" select="'Peter Andorfer, Martin Anton Müller und Henrike Rost'"/>
+    <xsl:param name="herausgeber-meta" select="'Andorfer, Peter; Müller, Martin Anton; Rost, Henrike'"/>
     <xsl:param name="publikationsjahr" select="'2026'"/>
     <!-- bis zum Start nicht indexieren (PLANUNG.md, Abschnitt 10: avoid_google_indexing); zum Start auf false() -->
     <xsl:param name="noindex" select="true()"/>

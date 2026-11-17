@@ -50,9 +50,8 @@
       ? seit.textContent.trim()
       : document.querySelector("h1").textContent.replace(/^[^,]*,\s*/, "").trim();
     var projekt = document.querySelector('meta[name="description"]');
-    return (
-      titel + ", " + datum + ". In: " + (projekt ? projekt.content : document.title) + ". " + permalink(karte)
-    );
+    var quelle = document.body.dataset.zitatQuelle || (projekt ? projekt.content : document.title);
+    return titel + ", " + datum + ". In: " + quelle + ". " + permalink(karte);
   }
 
   document.addEventListener("click", function (ev) {

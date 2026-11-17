@@ -37,7 +37,7 @@ main:has(#how-to-cite)>.container> :has(> #how-to-cite) {
 /* ===== Wohin in Wien damals ===== */
 
 :root {
-    --projekt-farbe: #8C2F39;
+    --projekt-farbe: #7A1C1C;
 }
 
 /* Ereignisgruppen-Überschriften */
@@ -152,10 +152,10 @@ main:has(#how-to-cite)>.container> :has(> #how-to-cite) {
     color: #ffffff;
 }
 
-.monatsraster .stufe-1 { background-color: #c98a91; color: #000000; }
-.monatsraster .stufe-2 { background-color: #b05863; }
-.monatsraster .stufe-3 { background-color: #8C2F39; }
-.monatsraster .stufe-4 { background-color: #5c1a22; }
+.monatsraster .stufe-1 { background-color: #D4A5A5; color: #000000; }
+.monatsraster .stufe-2 { background-color: #A65A5A; }
+.monatsraster .stufe-3 { background-color: #7A1C1C; }
+.monatsraster .stufe-4 { background-color: #4D1010; }
 
 .jahresliste {
     columns: 10rem;

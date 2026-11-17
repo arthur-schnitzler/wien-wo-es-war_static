@@ -6,6 +6,14 @@
     version="2.0">
     <xsl:template name="html_footer">
         <footer class="py-3 bg-body-tertiary">
+            <p class="text-center small mb-2">
+                <xsl:text>Daten: </xsl:text>
+                <a href="{$lizenz-url}" rel="license"><xsl:value-of select="$lizenz-name"/></a>
+                <xsl:text> · </xsl:text>
+                <a href="ueber-das-projekt.html#lizenz">Lizenz und Nachnutzung</a>
+                <xsl:text> · </xsl:text>
+                <a href="imprint.html">Impressum</a>
+            </p>
             <div class="text-center">
                 <a href="{$github_url}">
                     <i aria-hidden="true" class="bi bi-github fs-2"></i>

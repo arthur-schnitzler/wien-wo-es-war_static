@@ -100,7 +100,7 @@
                     <xsl:with-param name="html_title" select="concat($titel, ' – ', $project_short_title)"/>
                 </xsl:call-template>
             </head>
-            <body class="d-flex flex-column h-100">
+            <body class="d-flex flex-column h-100" data-zitat-quelle="{$project_title}, herausgegeben von {$herausgeber}, Wien {$publikationsjahr}">
                 <xsl:call-template name="nav_bar"/>
                 <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
                     <nav style="--bs-breadcrumb-divider: '›';" aria-label="Brotkrumen" class="container pt-3">

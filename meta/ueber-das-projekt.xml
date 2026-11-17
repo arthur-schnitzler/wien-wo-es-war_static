@@ -29,6 +29,11 @@
         <head>Lücken</head>
         <p>Vollständig erfasst sind die Aufführungen des Burgtheaters und der Oper. Für alle anderen Häuser und Veranstaltungen ist der Bestand lückenhaft; er stammt vor allem aus den Schnitzler-Projekten und aus Brahms online. Weitere Datenbestände, etwa von Konzerthaus, Musikverein oder Volksoper, nehmen wir gerne auf.</p>
       </div>
+      <div xml:id="lizenz">
+        <head>Lizenz und Nachnutzung</head>
+        <p>Die Daten auf dieser Website stehen unter der Lizenz <ref target="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0 International (CC BY 4.0)</ref>. Sie dürfen sie mit Namensnennung frei verwenden, bearbeiten und weitergeben. Bitte nennen Sie »Wohin in Wien damals« und die Quelle des jeweiligen Eintrags; einen Zitiervorschlag gibt es auf jeder Ereigniskarte. Die verlinkten Quellen (Burgtheater, Spielplan der Wiener Oper, ANNO u. a.) haben eigene Nutzungsbedingungen.</p>
+        <p>Der Programmcode der Website steht unter der <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_static/blob/main/LICENSE">MIT-Lizenz</ref>.</p>
+      </div>
       <div>
         <head>Technik</head>
         <p>Die Website ist statisch und wird aus den TEI-Daten mit XSLT erzeugt. Code: <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_static">wohin-in-wien-damals_static</ref>, Daten: <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_data">wohin-in-wien-damals_data</ref>.</p>

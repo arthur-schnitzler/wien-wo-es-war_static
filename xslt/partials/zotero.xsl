@@ -12,8 +12,8 @@
         <xsl:if test="$zoteroTitle">
             <meta name="citation_title" content="{$zoteroTitle}"/>
         </xsl:if>
-        <xsl:if test="normalize-space($herausgeber)">
-            <meta name="citation_editors" content="{$herausgeber}"/>
+        <xsl:if test="normalize-space($herausgeber-meta)">
+            <meta name="citation_editors" content="{$herausgeber-meta}"/>
         </xsl:if>
         <meta name="citation_publisher" content="Austrian Centre for Digital Humanities and Cultural Heritage (ACDH-CH)"/>
         <meta name="citation_book_title" content="{$project_title}"/>

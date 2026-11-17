@@ -69,7 +69,7 @@ Der Workflow [build.yml](.github/workflows/build.yml) baut die Seite und veröff
 
 ## Lizenzen
 
-Der Code steht unter der [MIT-Lizenz](LICENSE).
+Der Code steht unter der [MIT-Lizenz](LICENSE). Die Daten auf der Website stehen unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de) (Parameter `lizenz-name`, `lizenz-url` in `xslt/partials/params.xsl`).
 
 Die JavaScript-Bibliotheken liegen unter `html/vendor`; ihre Lizenzen stehen jeweils in einer `LICENSE`-Datei oder im Kopf der `.js`-Datei.
 
