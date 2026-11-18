@@ -17,13 +17,13 @@
   <text>
     <body>
       <div>
-        <p>»Wien, wo es war« macht kulturelle Ereignisse in Wien zwischen 1860 und 1939 durchsuchbar: Theater- und Opernaufführungen, Konzerte, Lesungen, Bälle, Filmvorführungen und mehr. Über einen Kalender ist jeder Tag dieses Zeitraums erreichbar.</p>
+        <p>»Wien, wo es war« macht kulturelle Ereignisse in Wien zwischen 1860 und 1938 durchsuchbar: Theater- und Opernaufführungen, Konzerte, Lesungen, Bälle, Filmvorführungen und mehr. Über einen Kalender ist jeder Tag dieses Zeitraums erreichbar.</p>
         <p>Die Daten verbinden Einträge aus verschiedenen Aufführungsdatenbanken und Online-Quellen zeitlich und örtlich. Aufgenommen sind nur Ereignisse, die innerhalb der heutigen Wiener Stadtgrenze stattgefunden haben. Vollständig erfasst sind bisher nur die Aufführungen von Burgtheater und Oper.</p>
         <p>Die Daten werden in der <ref target="https://pmb.acdh.oeaw.ac.at">PMB – Personen der Moderne Basis</ref> gepflegt und im <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_data">Daten-Repositorium</ref> für diese Website aufbereitet.</p>
       </div>
       <div>
         <head>Auswahl</head>
-        <p>Aus der PMB werden die Ereignisse übernommen, die zeitlich zwischen dem 1. Jänner 1860 und dem 31. Dezember 1939 liegen und räumlich an mindestens einem Ort innerhalb der heutigen Wiener Stadtgrenze stattgefunden haben. Die Koordinaten der Orte werden gegen das Polygon der Wiener Landesgrenze geprüft; hat ein Ort keine eigenen Koordinaten, zählen die des übergeordneten Ortes. Da die heutige Stadtgrenze zugrunde liegt, gehören auch die erst 1892, 1904 und 1938 eingemeindeten Gebiete dazu.</p>
+        <p>Aus der PMB werden die Ereignisse übernommen, die zeitlich zwischen dem 1. Jänner 1860 und dem 31. Dezember 1938 liegen und räumlich an mindestens einem Ort innerhalb der heutigen Wiener Stadtgrenze stattgefunden haben. Die Koordinaten der Orte werden gegen das Polygon der Wiener Landesgrenze geprüft; hat ein Ort keine eigenen Koordinaten, zählen die des übergeordneten Ortes. Da die heutige Stadtgrenze zugrunde liegt, gehören auch die erst 1892, 1904 und 1938 eingemeindeten Gebiete dazu.</p>
       </div>
       <div>
         <head>Lücken</head>

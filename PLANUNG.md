@@ -13,10 +13,10 @@ Stand: 17. November 2026 · Code: `wien-wo-es-war_static` · Daten: [`arthur-sch
 
 ## 1. Ziel
 
-Eine Website, die kulturelle Ereignisse in Wien 1860–1939 durchsuchbar macht.
+Eine Website, die kulturelle Ereignisse in Wien 1860–1938 durchsuchbar macht.
 
 **Muss**
-1. **Einfache Suche über einen Kalender:** jeder Tag 1860–1939 ist in höchstens zwei Schritten erreichbar, filterbar nach Art des Ereignisses und Ort.
+1. **Einfache Suche über einen Kalender:** jeder Tag 1860–1938 ist in höchstens zwei Schritten erreichbar, filterbar nach Art des Ereignisses und Ort.
 2. **Alle URIs eines Ereignisses als Links:** Jede `idno` erscheint als anklickbarer Link: Burgtheater-Archiv, Spielplan Oper, ANNO-Theaterzettel, Brahms online, Schnitzler-Projekte, PMB, Wikidata, Wikipedia. Kein URI wird verschluckt, auch keiner mit unbekanntem Typ.
 
 **Soll:** Register und Entitätsseiten mit der Entitäts-Anzeige der Schnitzler-Chronik, facettierte Suche, Startseite mit Einstieg über ein Datum.
@@ -25,7 +25,7 @@ Eine Website, die kulturelle Ereignisse in Wien 1860–1939 durchsuchbar macht.
 
 ## 2. Ausgangslage: die Daten
 
-Erzeugt von `python-scripts/build-data.py` im Daten-Repo aus PMB-`listevent.xml`. Ausgewählt ist der Zeitraum 1.1.1860–31.12.1939, räumlich die heutige Wiener Stadtgrenze.
+Erzeugt von `python-scripts/build-data.py` im Daten-Repo aus PMB-`listevent.xml`. Ausgewählt ist der Zeitraum 1.1.1860–31.12.1938 (das Daten-Repo liefert bis 1939, `prepare_data.py` filtert), räumlich die heutige Wiener Stadtgrenze.
 
 | | Anzahl |
 |---|---|
@@ -143,7 +143,7 @@ GitHub Pages erlaubt laut Doku 1 GB pro Site (vor dem ersten Deploy prüfen). Ko
 ## 5. Kalender (Kernanforderung 1)
 
 **Einstiege**
-- Datumsfeld `<input type="date" min="1860-01-01" max="1939-12-31">` auf Start- und Kalenderseite, das direkt zur Tagesseite führt.
+- Datumsfeld `<input type="date" min="1860-01-01" max="1938-12-31">` auf Start- und Kalenderseite, das direkt zur Tagesseite führt.
 - „Heute vor 100 Jahren“ (heute wäre das der 17. November 1926), clientseitig berechnet.
 - Auswahl von Jahr und Monat, Pfeiltasten für vor/zurück.
 
@@ -209,7 +209,7 @@ Grundlage sind `entities.xsl`, `entities-setup.xsl`, `entities.css`, `entity-tab
   - Werke: Urheber:innen mit Rollen, Datum.
   - Institutionen: Sitz.
   - Bei allen: Links zu Ressourcen und Normdaten.
-- **Tab „Ereignisse“** (die „Erwähnungen“ im Ereignis-Modus von `schnitzler-kultur`): Jahresdiagramm 1860–1939 und eine Liste nach Jahr und Monat, die direkt auf `TAG.html#pmbNNNN` verlinkt. Bei Personen getrennt nach „beteiligt“ (mitwirkend/teilnehmend) und „als Urheber:in aufgeführter Werke“.
+- **Tab „Ereignisse“** (die „Erwähnungen“ im Ereignis-Modus von `schnitzler-kultur`): Jahresdiagramm 1860–1938 und eine Liste nach Jahr und Monat, die direkt auf `TAG.html#pmbNNNN` verlinkt. Bei Personen getrennt nach „beteiligt“ (mitwirkend/teilnehmend) und „als Urheber:in aufgeführter Werke“.
 - **Tab „Relationen“** aus PMB-`relations.csv` (`fetch_relations.py`): optional, Phase 4.
 - Button **„Im Kalender zeigen“** (`kalender.html?ort=…` usw.).
 
@@ -259,7 +259,7 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 | Frage | Antwort |
 |---|---|
 | directory_name | `wien-wo-es-war_static` |
-| project_title | `Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939` |
+| project_title | `Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1938` |
 | project_short_title | `Wien, wo es war` |
 | default_lang | `de` |
 | github_org | `arthur-schnitzler` |
@@ -333,7 +333,7 @@ wien-wo-es-war_static/
 |---|---|---|
 | 0 Gerüst | Cookiecutter, `fetch_data.sh`, Aufräumen, Parameter, Vendor-Dateien, Build-Targets, Grundgerüst von `prepare_data.py` | `ant` läuft lokal und in Actions durch, Startseite und Register erscheinen |
 | 1 Tage & URIs | `tage.xsl`, `event-card.xsl`, Jahresseiten, Weiterleitungen, korrigierte URI-Liste, 404-Datumslogik | jede `idno` jedes Ereignisses ist auf seiner Tagesseite verlinkt (`check_output.py` grün) |
-| 2 Kalender | Kalender-JSON, `kalender.xsl`, `calendar.js` (Fork), Filter, URL-Zustand, Datumssprung auf der Startseite | jeder Tag 1860–1939 in ≤ 2 Klicks erreichbar; Kalenderdaten beim ersten Aufruf < 150 KB gzip |
+| 2 Kalender | Kalender-JSON, `kalender.xsl`, `calendar.js` (Fork), Filter, URL-Zustand, Datumssprung auf der Startseite | jeder Tag 1860–1938 in ≤ 2 Klicks erreichbar; Kalenderdaten beim ersten Aufruf < 150 KB gzip |
 | 3 Entitäten | Upstream-Änderungen an `entities.xsl`, Entitätsseiten, Ereigniszahlen in den Registern, Spielstättenkarte | alle 10.080 Entitätsseiten gebaut; keine Seite > 1 MB; Build < 30 min |
 | 4 Suche & Projekt | Typesense-Index und -Oberfläche, Projekt- und Quellenseiten, Sitemap, BEACON, optional Relationen | Facettensuche mit Jahresbereich funktioniert; alle Quellen sind genannt |
 | 5 Start | Domain, Barrierefreiheit, Kontraste, Größen- und Linkprüfung, Eintrag in PMB und in `list-of-relevant-uris.xml` | Site öffentlich; PMB verlinkt auf `pmbNNNN.html` |

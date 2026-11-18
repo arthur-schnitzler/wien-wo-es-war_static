@@ -35,6 +35,10 @@ NS = {"tei": TEI_NS, "xml": "http://www.w3.org/XML/1998/namespace"}
 # Namensraum für projekteigene Zusatzattribute in data/indices/listevent.xml
 WIW_NS = "https://wien-wo-es-war.acdh.oeaw.ac.at/ns"
 
+# Letzter Tag des Zeitraums; spätere Ereignisse aus dem Daten-Repo werden übergangen
+ENDE = "1938-12-31"
+ENDJAHR = int(ENDE[:4])
+
 # Typ für Ereignisse ohne eventName/@n (PLANUNG.md, Datenhinweise)
 TYP_OHNE_ANGABE = "Veranstaltung"
 
@@ -443,7 +447,7 @@ def main():
     namen, urheber_von = lies_register()
     parser = etree.XMLParser(remove_blank_text=True)
 
-    gesamt = tei_kopf("Ereignisse in Wien 1860–1939")
+    gesamt = tei_kopf("Ereignisse in Wien 1860–1938")
     gesamt_list = etree.SubElement(
         etree.SubElement(etree.SubElement(gesamt, tei("text")), tei("body")),
         tei("listEvent"),
@@ -468,10 +472,14 @@ def main():
 
     for datei in dateien:
         jahr = int(re.search(r"(\d{4})", datei.name).group(1))
+        if jahr > ENDJAHR:
+            continue
         tree = etree.parse(str(datei), parser)
         ereignisse = []
         for ev in tree.iterfind(".//tei:listEvent/tei:event", NS):
             d = ereignis_daten(ev, typen, urheber_von, fehlende_typen)
+            if d["datum"] > ENDE:
+                continue
             # Kopie für listevent.xml, ergänzt um Anzeigetitel (ohne Datum), Typ und Gruppe,
             # damit die Stylesheets diese Logik nicht wiederholen müssen
             kopie = etree.fromstring(etree.tostring(ev))
@@ -488,7 +496,7 @@ def main():
                 mehrtaegig.append(d)
                 if not d.get("unbestimmt"):
                     for tag in tage_zwischen(d["datum"], d["ende"]):
-                        if tag != d["datum"]:
+                        if tag != d["datum"] and tag <= ENDE:
                             laufend[tag].append(d["id"])
         jahre[jahr] = ereignisse
 

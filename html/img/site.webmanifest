@@ -1,7 +1,7 @@
 {
   "name": "Wien, wo es war",
   "short_name": "Wien, wo es war",
-  "description": "Kulturelle Ereignisse in Wien 1860–1939",
+  "description": "Kulturelle Ereignisse in Wien 1860–1938",
   "start_url": "../index.html",
   "icons": [
     { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },

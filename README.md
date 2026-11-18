@@ -1,6 +1,6 @@
-# Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939
+# Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1938
 
-Statische Website, die kulturelle Ereignisse in Wien 1860–1939 über einen Kalender und eine Suche zugänglich macht.
+Statische Website, die kulturelle Ereignisse in Wien 1860–1938 über einen Kalender und eine Suche zugänglich macht.
 
 * Daten: https://github.com/arthur-schnitzler/wien-wo-es-war_data
 * gebaut mit dem [DSE-Static-Cookiecutter](https://github.com/acdh-oeaw/dse-static-cookiecutter)
@@ -52,7 +52,7 @@ dann http://localhost:8000/
   * `farben.xsl` – erzeugt `html/css/farben.css` (URI- und Gruppenfarben)
 * Register und Entitätsseiten (`listperson.xsl`, `listplace.xsl`, `listbibl.xsl`, `listorg.xsl`): Tabulator-Tabellen mit Spalte „Ereignisse“, Karte der Spielstätten; eine Seite `pmbNNNN.html` pro Entität mit dem Layout aus `schnitzler-chronik-static/xslt/export/entities.xsl`
   * `prepare_data.py` schreibt die Ereignisse jeder Entität als `note[@type='mentions']` in die Registerkopien unter `data/indices/`; `entities.xsl` zeigt sie im Normalmodus an
-  * `xslt/partials/entities-local.xsl` setzt die Parameter dafür (Zeitraum 1860–1939, ab 2.500 Ereignissen nur Jahresblöcke mit Link in den Kalender, Tab „Ereignisse“) und ergänzt „Im Kalender zeigen“
+  * `xslt/partials/entities-local.xsl` setzt die Parameter dafür (Zeitraum 1860–1938, ab 2.500 Ereignissen nur Jahresblöcke mit Link in den Kalender, Tab „Ereignisse“) und ergänzt „Im Kalender zeigen“
   * `entities.xsl`, `entities-setup.xsl`, `relations.json`, `html/css/entities.css`, `html/js/entity-tabs.js` kommen aus `schnitzler-chronik-static`; `check_entities_xsl.py` synchronisiert sie. Der Workflow führt es vor jedem Build aus.
 * `html/js/calendar.js` + `html/css/kalender.css` – Kalender (`kalender.html`): Ansichten Zeitraum, Jahr, Monat, Tag; Filter nach Ereignisgruppe, Quelle, Spielstätte und per URL nach `ort`, `werk`, `person`, `institution`; Zustand in der URL, z. B. `kalender.html?ansicht=monat&datum=1900-05&gruppen=oper&ort=pmb15`
 * `html/js/tag.js` – Datumssprung, „Heute vor 100 Jahren“, „Link kopieren“, „Zitieren“; `html/js/404.js` – Tage ohne Ereignisse

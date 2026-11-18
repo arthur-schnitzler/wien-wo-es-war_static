@@ -3,7 +3,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
     <xsl:param name="directory_name">wien-wo-es-war_static</xsl:param>
-    <xsl:param name="project_title">Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939</xsl:param>
+    <xsl:param name="project_title">Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1938</xsl:param>
     <!-- offen (PLANUNG.md, Abschnitt 13) -->
     <xsl:param name="redmine_id"/>
     <xsl:param name="project_short_title">Wien, wo es war</xsl:param>
@@ -31,5 +31,5 @@
     <xsl:param name="noindex" select="true()"/>
     <!-- Zeitraum der Daten -->
     <xsl:param name="start-year" select="1860"/>
-    <xsl:param name="end-year" select="1939"/>
+    <xsl:param name="end-year" select="1938"/>
 </xsl:stylesheet>

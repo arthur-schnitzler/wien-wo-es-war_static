@@ -15,7 +15,7 @@
   "use strict";
 
   const START = 1860;
-  const ENDE = 1939;
+  const ENDE = 1938;
   const MONATE = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
     "September", "Oktober", "November", "Dezember"];
   const WT_KURZ = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];

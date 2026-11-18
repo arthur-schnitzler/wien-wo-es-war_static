@@ -4,7 +4,7 @@
   "use strict";
 
   var START = "1860-01-01";
-  var ENDE = "1939-12-31";
+  var ENDE = "1938-12-31";
   var MONATE = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
     "September", "Oktober", "November", "Dezember"];
   var WOCHENTAGE = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
