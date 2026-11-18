@@ -16,7 +16,7 @@
     <xsl:param name="DATAHASH" select="''"/>
     <!-- vorläufig, Domain offen (PLANUNG.md, Abschnitt 13) -->
     <xsl:param name="base_url">https://wohin-in-wien-damals.acdh.oeaw.ac.at</xsl:param>
-    <xsl:param name="data_repo">https://github.com/arthur-schnitzler/wohin-in-wien-damals_data</xsl:param>
+    <xsl:param name="data_repo">https://github.com/arthur-schnitzler/wien-wo-es-war_data</xsl:param>
     <xsl:param name="current-edition" select="'wohin-in-wien-damals'"/>
     <!-- Gold aus dem Logo; mit weißer Schrift 4,74:1 (AA) -->
     <xsl:param name="current-colour" select="'#976A37'"/>

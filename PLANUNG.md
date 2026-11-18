@@ -1,6 +1,6 @@
 # Wohin in Wien damals – Planung der Website
 
-Stand: 17. November 2026 · Code: `wohin-in-wien-damals_static` · Daten: [`arthur-schnitzler/wohin-in-wien-damals_data`](https://github.com/arthur-schnitzler/wohin-in-wien-damals_data)
+Stand: 17. November 2026 · Code: `wohin-in-wien-damals_static` · Daten: [`arthur-schnitzler/wien-wo-es-war_data`](https://github.com/arthur-schnitzler/wien-wo-es-war_data)
 
 ## Kurzfassung
 
@@ -268,8 +268,8 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 | translations | `no` |
 | avoid_google_indexing | `true` bis zum Start; das schreibt `noindex` fest in `html_head.xsl`, dort zum Start entfernen |
 | use_remote_data | `true` |
-| data_dir | `wohin-in-wien-damals_data` |
-| data_repo | `https://github.com/arthur-schnitzler/wohin-in-wien-damals_data` |
+| data_dir | `wien-wo-es-war_data` |
+| data_repo | `https://github.com/arthur-schnitzler/wien-wo-es-war_data` |
 
 ### Anpassungen nach dem Generieren
 

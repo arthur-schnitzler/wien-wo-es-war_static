@@ -2,7 +2,7 @@
 
 Statische Website, die kulturelle Ereignisse in Wien 1860–1939 über einen Kalender und eine Suche zugänglich macht.
 
-* Daten: https://github.com/arthur-schnitzler/wohin-in-wien-damals_data
+* Daten: https://github.com/arthur-schnitzler/wien-wo-es-war_data
 * gebaut mit dem [DSE-Static-Cookiecutter](https://github.com/acdh-oeaw/dse-static-cookiecutter)
 * Planung und Stand der Umsetzung: [PLANUNG.md](PLANUNG.md)
 

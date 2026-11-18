@@ -4,8 +4,8 @@
 # der Build erwartet sie unter data/.
 set -euo pipefail
 
-DATA_REPO=https://github.com/arthur-schnitzler/wohin-in-wien-damals_data.git
-DATA_DIR=wohin-in-wien-damals_data
+DATA_REPO=https://github.com/arthur-schnitzler/wien-wo-es-war_data.git
+DATA_DIR=wien-wo-es-war_data
 
 echo "fetching data from ${DATA_REPO}"
 rm -rf data/ "${DATA_DIR}"

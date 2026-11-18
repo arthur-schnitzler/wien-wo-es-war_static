@@ -12,7 +12,7 @@ data/indices/ereignistypen.xml
 html/js-data/
 html/sitemap.xml
 html/css/farben.css
-wohin-in-wien-damals_data/
+wien-wo-es-war_data/
 
 data/indices/*.xml
 data/editions/*.xml
