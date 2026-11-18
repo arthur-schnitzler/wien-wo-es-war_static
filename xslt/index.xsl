@@ -58,7 +58,7 @@
                         <h1 class="startlogo mb-3">
                             <img src="img/logo-640.jpg" srcset="img/logo-640.jpg 640w, img/logo.jpg 1260w"
                                 sizes="(max-width: 700px) 100vw, 640px" width="640" height="349"
-                                alt="Wohin in Wien, 1860–1939" class="img-fluid"/>
+                                alt="Wien, wo es war, 1860–1939" class="img-fluid"/>
                         </h1>
                         <p class="lead">
                             <xsl:text>Kulturelle Ereignisse in Wien </xsl:text>

@@ -32,7 +32,7 @@
         <meta property="og:image" content="{$base_url}/{$project_logo}" />
         <meta property="og:image:width" content="1260" />
         <meta property="og:image:height" content="687" />
-        <meta property="og:image:alt" content="Logo: die Wiener Secession, daneben der Schriftzug Wohin in Wien" />
+        <meta property="og:image:alt" content="Logo: die Wiener Secession, daneben der Schriftzug Wien, wo es war" />
 
         <link href="vendor/bootstrap-5.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="vendor/bootstrap-icons/font/bootstrap-icons.min.css" />
