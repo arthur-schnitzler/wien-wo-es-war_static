@@ -6,7 +6,7 @@ Stand: 17. November 2026 · Code: `wien-wo-es-war_static` · Daten: [`arthur-sch
 
 - Statische Site mit dem **dse-static-cookiecutter** (XSLT 2.0/Saxon, Ant, Bootstrap 5), Daten werden beim Build aus dem Daten-Repo geholt.
 - **Die Tagesseite ist das Herzstück**: `1900-01-01.html` zeigt alle Ereignisse des Tages als Karten, jede mit **allen URIs als Links**. `pmbNNNN.html` leitet bei Ereignissen auf `TAG.html#pmbNNNN` weiter.
-- **Kalender** als Einstieg: Sprung zu jedem Datum, Ansichten Zeitraum/Jahr/Monat/Tag, Filter nach Ereignisgruppe, Quelle, Spielstätte, Person, Werk. Daten werden pro Jahr nachgeladen (max. 46 KB gzip).
+- **Kalender** als Einstieg: Sprung zu jedem Datum, Ansichten Zeitraum/Jahr/Monat/Woche/Tag, Filter nach Ereignisgruppe, Quelle, Spielstätte, Person, Werk. Daten werden pro Jahr nachgeladen (max. 46 KB gzip).
 - **Entitätsseiten** für Personen, Orte, Werke und Institutionen mit `entities.xsl` aus `schnitzler-chronik-static/xslt/export`; dafür sind einige rückwärtskompatible Änderungen upstream nötig (Abschnitt 7).
 - **Typesense-Suche** ergänzt den Kalender. Kalender und Tagesseiten funktionieren ohne Server.
 - Geschätzt ~100.000 Dateien, ~450 MB, damit passt die Site auf GitHub Pages.
@@ -150,7 +150,8 @@ GitHub Pages erlaubt laut Doku 1 GB pro Site (vor dem ersten Deploy prüfen). Ko
 **Ansichten**
 - *Zeitraum*: 80 Jahre × 12 Monate als Heatmap; ein Klick öffnet den Monat.
 - *Jahr*: 12 Monatsraster, Tage nach Anzahl eingefärbt.
-- *Monat*: Raster mit farbigen Punkten je Ereignisgruppe und den ersten Titeln pro Tag; auf schmalen Bildschirmen als Liste.
+- *Monat*: Raster mit farbigen Punkten je Ereignisgruppe und den ersten Titeln pro Tag; auf schmalen Bildschirmen als Liste. Die Kalenderwoche am Zeilenanfang öffnet die Woche.
+- *Woche*: sieben Spalten (Montag–Sonntag) mit allen Ereignissen (Typ, Titel, Urheber:in, Ort), darüber laufende mehrtägige Ereignisse; auf schmalen Bildschirmen untereinander. Ein Klick auf ein Ereignis öffnet den Tag an dieser Karte. URL: `?ansicht=woche&datum=1900-05-14` (beliebiger Tag der Woche), ein darin geöffneter Tag `?ansicht=tag&datum=…&von=woche`.
 - *Tag*: Seitenleiste mit Ereigniskarten (Typ, Titel, Ort, **URI-Links**) und Link auf die Tagesseite.
 
 **Filter** (wirken in allen Ansichten)

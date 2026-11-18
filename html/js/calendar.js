@@ -8,8 +8,10 @@
  * - Kategorien sind Ereignisgruppen (js-data/ereignistypen.json)
  * - die Tagesansicht zeigt Ereigniskarten mit allen URI-Links
  * - Filter nach Quelle, Spielstätte und Entität (?ort= ?werk= ?person= ?institution=)
- * - Ansichten: Zeitraum (Jahre × Monate), Jahr, Monat; Tag als Seitenleiste
+ * - Ansichten: Zeitraum (Jahre × Monate), Jahr, Monat, Woche; Tag als Seitenleiste
  * - Zustand in der URL, z. B. kalender.html?ansicht=monat&datum=1900-05&gruppen=oper&ort=pmb15
+ *   oder kalender.html?ansicht=woche&datum=1900-05-14 (ein beliebiger Tag der Woche);
+ *   ein in der Wochenansicht geöffneter Tag: ?ansicht=tag&datum=1900-05-16&von=woche
  */
 (function () {
   "use strict";
@@ -21,7 +23,9 @@
   const WT_KURZ = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
   const WT_LANG = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
   const ENTITAETEN = { ort: "Ort", werk: "Werk", person: "Person", institution: "Institution" };
-  const ANSICHTEN = { zeitraum: "Zeitraum", jahr: "Jahr", monat: "Monat" };
+  const ANSICHTEN = { zeitraum: "Zeitraum", jahr: "Jahr", monat: "Monat", woche: "Woche" };
+  const ERSTER = START + "-01-01";
+  const LETZTER = ENDE + "-12-31";
   const REZENSION = "wird rezensiert in";
   const SCHMAL = window.matchMedia("(max-width: 767.98px)");
 
@@ -57,6 +61,32 @@
   const datumText = (k) => { const [j, m, t] = teile(k); return t + ". " + MONATE[m - 1] + " " + j; };
   const datumLang = (k) => { const [j, m, t] = teile(k); return WT_LANG[wochentag(j, m, t)] + ", " + datumText(k); };
   const anzahlText = (n) => (n === 1 ? "1 Ereignis" : n + " Ereignisse");
+  const imZeitraum = (k) => k >= ERSTER && k <= LETZTER;
+
+  /* Wochen beginnen am Montag; eine Woche wird über ihren Montag angesprochen */
+  const montag = (k) => { const [j, m, t] = teile(k); return verschiebe(k, -wochentag(j, m, t)); };
+  // Kalenderwoche nach ISO 8601: Woche des Donnerstags
+  function kalenderwoche(mo) {
+    const [j, m, t] = teile(verschiebe(mo, 3));
+    return Math.floor((Date.UTC(j, m - 1, t) - Date.UTC(j, 0, 1)) / 864e5 / 7) + 1;
+  }
+  // „14.–20. Mai 1900“, „28. Mai – 3. Juni 1900“, „31. Dezember 1900 – 6. Jänner 1901“
+  function wochenTitel(mo) {
+    const so = verschiebe(mo, 6);
+    const [j1, m1, t1] = teile(mo);
+    const [j2, m2, t2] = teile(so);
+    if (j1 !== j2) return datumText(mo) + " – " + datumText(so);
+    if (m1 !== m2) return t1 + ". " + MONATE[m1 - 1] + " – " + datumText(so);
+    return t1 + ".–" + t2 + ". " + MONATE[m1 - 1] + " " + j1;
+  }
+  // Monat, zu dem eine Woche gehört (der ihres Donnerstags), begrenzt auf den Zeitraum
+  function monatDerWoche(mo) {
+    let d = verschiebe(mo, 3);
+    if (d < ERSTER) d = ERSTER;
+    if (d > LETZTER) d = LETZTER;
+    const [j, m] = teile(d);
+    return { jahr: j, monat: m };
+  }
 
   function hexRgb(hex) {
     const n = parseInt(hex.slice(1), 16);
@@ -85,7 +115,7 @@
       this.zaehlCache = new Map();
       this.renderNr = 0;
       this.zustand = {
-        ansicht: "zeitraum", jahr: 1900, monat: 1, tag: null,
+        ansicht: "zeitraum", jahr: 1900, monat: 1, tag: null, woche: null,
         gruppen: null, quelle: "", ort: "", werk: "", person: "", institution: "",
       };
     }
@@ -245,9 +275,10 @@
       return e.titel || (werke[0] ? jd.namen[werke[0][0]] : "") || e.typ;
     }
 
-    // ohne Untertitel (Teil nach dem ersten „. “), für Monatszellen und -listen
+    // ohne Untertitel (Teil nach dem ersten „. “ vor einem Großbuchstaben), für Monat und Woche;
+    // „Fidelio, op. 72“, „Klavierquartett Nr. 1“ und „2. Liederabend“ bleiben ganz
     kurztitel(e, jd) {
-      return this.titel(e, jd).split(". ")[0];
+      return this.titel(e, jd).split(/\.\s(?=[A-ZÄÖÜ])/)[0];
     }
 
     url(subtype, wert, jd) {
@@ -265,9 +296,15 @@
       z.tag = null;
       if (j >= START && j <= ENDE) z.jahr = j;
       if (m >= 1 && m <= 12) z.monat = m;
-      if (ansicht === "tag" && t >= 1 && t <= tageImMonat(z.jahr, z.monat)) {
-        z.ansicht = "monat";
+      const tagOk = t >= 1 && t <= tageImMonat(z.jahr, z.monat);
+      if (ansicht === "tag" && tagOk) {
         z.tag = schluessel(z.jahr, z.monat, t);
+        z.ansicht = p.get("von") === "woche" ? "woche" : "monat";
+        z.woche = montag(z.tag);
+      } else if (ansicht === "woche") {
+        z.ansicht = "woche";
+        z.woche = tagOk ? montag(schluessel(z.jahr, z.monat, t)) : this.wocheImMonat();
+        Object.assign(z, monatDerWoche(z.woche));
       } else if (ANSICHTEN[ansicht]) {
         z.ansicht = ansicht;
       } else if (m) {
@@ -287,10 +324,13 @@
       if (z.tag) {
         p.set("ansicht", "tag");
         p.set("datum", z.tag);
+        if (z.ansicht === "woche") p.set("von", "woche");
       } else {
         p.set("ansicht", z.ansicht);
         if (z.ansicht === "jahr") p.set("datum", String(z.jahr));
         if (z.ansicht === "monat") p.set("datum", z.jahr + "-" + pad(z.monat));
+        // erster Tag der Woche im Zeitraum (die erste Woche beginnt am 26.12.1859)
+        if (z.ansicht === "woche") p.set("datum", z.woche < ERSTER ? ERSTER : z.woche);
       }
       if (z.gruppen) p.set("gruppen", [...z.gruppen].join(","));
       if (z.quelle) p.set("quelle", z.quelle);
@@ -324,7 +364,36 @@
         if (m > 12) { m = 1; j++; }
         if (m < 1) { m = 12; j--; }
         if (j >= START && j <= ENDE) this.weiter({ jahr: j, monat: m });
+      } else if (z.ansicht === "woche") {
+        const mo = verschiebe(z.woche, 7 * r);
+        if (verschiebe(mo, 6) >= ERSTER && mo <= LETZTER) this.weiter({ woche: mo, ...monatDerWoche(mo) });
       }
+    }
+
+    // erste Woche, deren Donnerstag im gewählten Monat liegt
+    wocheImMonat() {
+      const z = this.zustand;
+      const erster = schluessel(z.jahr, z.monat, 1);
+      return verschiebe(montag(erster), wochentag(z.jahr, z.monat, 1) >= 4 ? 7 : 0);
+    }
+
+    // Woche beim Wechsel in die Wochenansicht: die des offenen Tages, die zuletzt
+    // gezeigte, wenn sie in den gewählten Monat fällt, sonst die erste des Monats
+    wocheFuerWechsel() {
+      const z = this.zustand;
+      if (z.tag) return montag(z.tag);
+      const erster = schluessel(z.jahr, z.monat, 1);
+      const letzter = schluessel(z.jahr, z.monat, tageImMonat(z.jahr, z.monat));
+      if (z.woche && verschiebe(z.woche, 6) >= erster && z.woche <= letzter) return z.woche;
+      return this.wocheImMonat();
+    }
+
+    // Jahre, deren Daten die aktuelle Ansicht braucht (eine Woche kann zwei berühren)
+    jahreDerAnsicht() {
+      const z = this.zustand;
+      if (z.ansicht !== "woche") return [z.jahr];
+      const jahre = new Set([teile(z.woche)[0], teile(verschiebe(z.woche, 6))[0]]);
+      return [...jahre].filter((j) => j >= START && j <= ENDE);
     }
 
     /* ----- Gerüst ----- */
@@ -356,7 +425,7 @@
           });
           for (let j = START; j <= ENDE; j++) zaehlProJahr.set(j, await this.zaehlung(j));
         } else {
-          zaehlProJahr.set(z.jahr, await this.zaehlung(z.jahr));
+          for (const j of this.jahreDerAnsicht()) zaehlProJahr.set(j, await this.zaehlung(j));
         }
       }
       if (nr !== this.renderNr) return;
@@ -367,6 +436,7 @@
       let inhalt;
       if (z.ansicht === "zeitraum") inhalt = this.ansichtZeitraum();
       else if (z.ansicht === "jahr") inhalt = this.ansichtJahr();
+      else if (z.ansicht === "woche") inhalt = await this.ansichtWoche(nr);
       else inhalt = await this.ansichtMonat(nr);
       if (nr !== this.renderNr) return;
       this.koerperEl.replaceChildren(inhalt);
@@ -380,20 +450,23 @@
     leiste() {
       const z = this.zustand;
       const titel = z.ansicht === "zeitraum" ? START + "–" + ENDE
-        : z.ansicht === "jahr" ? String(z.jahr) : MONATE[z.monat - 1] + " " + z.jahr;
+        : z.ansicht === "jahr" ? String(z.jahr)
+          : z.ansicht === "woche" ? wochenTitel(z.woche) : MONATE[z.monat - 1] + " " + z.jahr;
       const heute = new Date();
       const vor100 = schluessel(heute.getFullYear() - 100, heute.getMonth() + 1, heute.getDate());
       const datumFeld = h("input", {
         type: "date", class: "form-control form-control-sm", id: "kal-datum",
-        min: START + "-01-01", max: ENDE + "-12-31",
-        value: z.tag || schluessel(z.jahr, z.monat, 1),
+        min: ERSTER, max: LETZTER,
+        value: z.tag || (z.ansicht === "woche" ? (z.woche < ERSTER ? ERSTER : z.woche) : schluessel(z.jahr, z.monat, 1)),
       });
       this.leisteEl.replaceChildren(
         h("div", { class: "btn-group btn-group-sm", role: "group", "aria-label": "Ansicht" },
           Object.entries(ANSICHTEN).map(([id, label]) => h("button", {
             type: "button", class: "btn btn-outline-secondary" + (z.ansicht === id ? " active" : ""),
             "aria-pressed": z.ansicht === id ? "true" : "false",
-            onclick: () => this.weiter({ ansicht: id, tag: null }),
+            onclick: () => this.weiter(id === "woche" && z.ansicht !== "woche"
+              ? { ansicht: id, tag: null, woche: this.wocheFuerWechsel() }
+              : { ansicht: id, tag: null }),
           }, label))),
         h("div", { class: "kal-navigation" },
           h("button", {
@@ -425,11 +498,18 @@
       const G = this.gruppen.length;
       const s = new Array(G).fill(0);
       const add = (w) => { if (w) w.forEach((n, i) => { s[i] += n; }); };
-      const prefix = z.ansicht === "zeitraum" ? "" : z.ansicht === "jahr" ? z.jahr + "-" : z.jahr + "-" + pad(z.monat) + "-";
-      if (this.detailFilter()) {
-        this.zaehlProJahr.forEach((m) => m && m.forEach((w, k) => { if (k.startsWith(prefix)) add(w); }));
+      let sichtbar;
+      if (z.ansicht === "woche") {
+        const so = verschiebe(z.woche, 6);
+        sichtbar = (k) => k >= z.woche && k <= so;
       } else {
-        this.tageBasis.forEach((w, k) => { if (k.startsWith(prefix)) add(w); });
+        const prefix = z.ansicht === "zeitraum" ? "" : z.ansicht === "jahr" ? z.jahr + "-" : z.jahr + "-" + pad(z.monat) + "-";
+        sichtbar = (k) => k.startsWith(prefix);
+      }
+      if (this.detailFilter()) {
+        this.zaehlProJahr.forEach((m) => m && m.forEach((w, k) => { if (sichtbar(k)) add(w); }));
+      } else {
+        this.tageBasis.forEach((w, k) => { if (sichtbar(k)) add(w); });
       }
       return s;
     }
@@ -615,11 +695,21 @@
     monatsraster(tage, jd) {
       const z = this.zustand;
       const grid = h("div", { class: "kal-monat", role: "grid" },
+        h("div", { class: "kal-monat-wt", title: "Kalenderwoche", "aria-hidden": "true" }, "KW"),
         WT_KURZ.map((w) => h("div", { class: "kal-monat-wt", "aria-hidden": "true" }, w)));
-      for (let i = 0; i < wochentag(z.jahr, z.monat, 1); i++) grid.append(h("div", { class: "kal-monat-leer" }));
       tage.forEach(({ k, t, w, ereignisse }) => {
         const n = ereignisse.length;
         const wt = wochentag(z.jahr, z.monat, t);
+        // am Zeilenanfang: Knopf für die Wochenansicht
+        if (t === 1 || wt === 0) {
+          const mo = montag(k);
+          grid.append(h("button", {
+            type: "button", class: "kal-monat-kw", title: "Woche anzeigen",
+            "aria-label": "Woche vom " + wochenTitel(mo) + " anzeigen",
+            onclick: () => this.weiter({ ansicht: "woche", woche: mo, tag: null }),
+          }, kalenderwoche(mo)));
+        }
+        if (t === 1) for (let i = 0; i < wt; i++) grid.append(h("div", { class: "kal-monat-leer" }));
         const zelle = h("button", {
           type: "button", class: "kal-monat-tag" + (n ? " hat" : "") + (wt >= 5 ? " wochenende" : "") + (z.tag === k ? " gewaehlt" : ""),
           "aria-label": (n ? anzahlText(n) : "keine Ereignisse") + " am " + datumText(k),
@@ -648,6 +738,94 @@
       });
       if (!mit.length) liste.append(h("li", {}, "In diesem Monat gibt es keine Ereignisse, die den Filtern entsprechen."));
       return liste;
+    }
+
+    /* ----- Woche: sieben Spalten mit allen Ereignissen, schmal untereinander ----- */
+
+    async ansichtWoche(nr) {
+      const z = this.zustand;
+      const so = verschiebe(z.woche, 6);
+      const nachGruppe = (a, b) => this.gIndex.get(this.gruppeVon(a)) - this.gIndex.get(this.gruppeVon(b));
+      const tage = [];
+      for (let i = 0; i < 7; i++) {
+        const k = verschiebe(z.woche, i);
+        if (!imZeitraum(k)) { tage.push({ k, i, aus: true }); continue; }
+        const jd = await this.jahrLaden(teile(k)[0]);
+        tage.push({ k, i, jd, ereignisse: (jd.nachTag.get(k) || []).filter((e) => this.passt(e, jd)).sort(nachGruppe) });
+      }
+
+      // Ereignisse über mehrere Tage, die vor dieser Woche begonnen haben
+      const laufendIds = new Set();
+      tage.forEach(({ k }) => (this.laufend[k] || []).forEach((id) => laufendIds.add(id)));
+      const laufend = [];
+      for (const id of laufendIds) {
+        const zr = this.zeitraeume[id];
+        if (!zr || zr[0] >= z.woche) continue;
+        const ljd = await this.jahrLaden(teile(zr[0])[0]);
+        const e = ljd.nachId.get(id);
+        if (e && this.passt(e, ljd)) laufend.push([e, ljd, zr]);
+      }
+      if (nr !== this.renderNr) return h("div");
+
+      const summe = tage.reduce((s, x) => s + (x.ereignisse ? x.ereignisse.length : 0), 0);
+      const spalten = tage.map(({ k, i, jd, ereignisse, aus }) => {
+        const [, m, t] = teile(k);
+        const kopfId = "kal-woche-" + k;
+        const datum = [h("span", { class: "kal-woche-wt" }, WT_KURZ[i]), " ", t + ". " + MONATE[m - 1]];
+        if (aus) {
+          return h("section", { class: "kal-woche-tag aus", "aria-labelledby": kopfId },
+            h("h3", { class: "kal-woche-kopf", id: kopfId }, h("span", { class: "kal-woche-datum" }, datum)),
+            h("p", { class: "kal-woche-hinweis" }, "außerhalb des Zeitraums"));
+        }
+        const n = ereignisse.length;
+        return h("section", {
+          class: "kal-woche-tag" + (n ? " hat" : "") + (i >= 5 ? " wochenende" : "") + (z.tag === k ? " gewaehlt" : ""),
+          "aria-labelledby": kopfId,
+        },
+        h("h3", { class: "kal-woche-kopf", id: kopfId },
+          h("button", {
+            type: "button", class: "kal-woche-datum",
+            "aria-label": (n ? anzahlText(n) : "keine Ereignisse") + " am " + datumLang(k),
+            onclick: () => this.weiter({ tag: k, jahr: teile(k)[0], monat: m }),
+          }, datum, n ? h("span", { class: "kal-woche-n" }, n) : null)),
+        n ? h("ol", { class: "kal-woche-liste list-unstyled" },
+          ereignisse.map((e) => h("li", {}, this.wochenEintrag(e, jd, k))))
+          : h("p", { class: "kal-woche-hinweis" }, "keine Ereignisse"));
+      });
+
+      return h("div", { class: "kal-woche-rahmen" },
+        laufend.length ? h("div", { class: "kal-woche-laufend" },
+          h("h3", { class: "h6 mb-1" }, "Laufend"),
+          h("ul", { class: "list-unstyled mb-0" }, laufend.map(([e, ljd, zr]) => h("li", { class: "gruppe-" + this.gruppeVon(e) },
+            h("a", { href: e.datum + ".html#" + e.id }, this.kurztitel(e, ljd)),
+            h("span", { class: "text-body-secondary" }, " · " + e.typ + ", " + datumText(zr[0]) + " bis " + datumText(zr[1])))))) : null,
+        h("div", { class: "kal-woche" }, spalten),
+        !summe && !laufend.length
+          ? h("p", { class: "text-body-secondary mt-2" }, "In dieser Woche gibt es keine Ereignisse"
+            + (this.detailFilter() || z.gruppen ? ", die den Filtern entsprechen." : ".")) : null,
+        h("p", { class: "small text-body-secondary mt-2" },
+          "Kalenderwoche " + kalenderwoche(z.woche) + " (" + datumText(z.woche) + " bis " + datumText(so) + "). "
+          + "Ein Klick auf ein Ereignis oder ein Datum öffnet den Tag mit allen Links; die Pfeiltasten blättern wochenweise."));
+    }
+
+    // ein Ereignis in der Wochenansicht: Typ, Titel, Urheber:in und Ort; öffnet den Tag an dieser Karte
+    wochenEintrag(e, jd, k) {
+      const [j, m] = teile(k);
+      const werke = (e.werke || []).filter((w) => w[1] !== REZENSION);
+      const urheber = [];
+      werke.forEach((w) => (jd.urheber[w[0]] || []).forEach((a) => {
+        if (!urheber.includes(a[0])) urheber.push(a[0]);
+      }));
+      const ort = (e.orte || []).map((o) => (o === "pmb50" ? "Wien" : jd.namen[o] || o));
+      const info = [urheber.slice(0, 2).map((a) => jd.namen[a] || a).join(", ") + (urheber.length > 2 ? " u. a." : ""), ort.join(", ")]
+        .filter(Boolean).join(" · ");
+      return h("button", {
+        type: "button", class: "kal-woche-ereignis gruppe-" + this.gruppeVon(e), title: this.titel(e, jd),
+        onclick: () => { this.fokus = e.id; this.weiter({ tag: k, jahr: j, monat: m }); },
+      },
+      h("span", { class: "kal-woche-typ" }, e.typ, e.ende ? " bis " + datumText(e.ende) : ""),
+      h("span", { class: "kal-woche-titel" }, this.kurztitel(e, jd)),
+      info ? h("span", { class: "kal-woche-info" }, info) : null);
     }
 
     /* ----- Tag: Seitenleiste mit Ereigniskarten ----- */
@@ -702,7 +880,16 @@
       this.tagEl.replaceChildren(leiste);
       this.tagEl.hidden = false;
       document.body.classList.add("kal-offen");
-      schliessen.focus();
+      // aus der Wochenansicht: zur angeklickten Karte springen
+      const karte = this.fokus && document.getElementById("kal-karte-" + this.fokus);
+      this.fokus = null;
+      if (karte) {
+        karte.classList.add("fokus");
+        karte.scrollIntoView({ block: "nearest" });
+        karte.querySelector("h3 a").focus({ preventScroll: true });
+      } else {
+        schliessen.focus();
+      }
     }
 
     // nächster bzw. vorheriger Tag mit Ereignissen, die den Filtern entsprechen
@@ -719,6 +906,7 @@
           if (!(jd.nachTag.get(t) || []).some((e) => this.passt(e, jd))) continue;
         }
         const [j, m] = teile(t);
+        if (this.zustand.ansicht === "woche") return this.weiter({ tag: t, jahr: j, monat: m, woche: montag(t) });
         return this.weiter({ tag: t, jahr: j, monat: m, ansicht: "monat" });
       }
     }
@@ -734,7 +922,7 @@
       const zeile = (label, inhalt) => (inhalt && inhalt.length) ? h("div", { class: "kal-karte-zeile" }, h("span", { class: "text-body-secondary" }, label + " "), inhalt) : null;
       const liste = (keys) => keys.map((k, i) => [i ? ", " : "", k === "pmb50" ? h("a", { href: "pmb50.html" }, "Wien (Ort nicht näher bestimmt)") : link(k)]);
 
-      return h("article", { class: "kal-karte gruppe-" + gruppe },
+      return h("article", { class: "kal-karte gruppe-" + gruppe, id: istLaufend ? null : "kal-karte-" + e.id },
         h("div", { class: "d-flex flex-wrap gap-2 align-items-baseline" },
           h("span", { class: "badge ereignis-typ" }, e.typ),
           istLaufend && e.ende ? h("span", { class: "small text-body-secondary" }, "bis " + datumText(e.ende)) : null),

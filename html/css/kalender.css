@@ -200,8 +200,27 @@
 /* Monat */
 .kal-monat {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: 2rem repeat(7, minmax(0, 1fr));
     gap: 3px;
+}
+
+/* Kalenderwoche am Zeilenanfang, öffnet die Wochenansicht */
+.kal-monat-kw {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    padding: 0.45rem 0 0;
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-monat-kw:hover,
+.kal-monat-kw:focus-visible {
+    background: var(--bs-tertiary-bg);
+    color: var(--projekt-farbe);
 }
 
 .kal-monat-wt {
@@ -309,6 +328,137 @@
     white-space: normal;
 }
 
+/* Woche: sieben Spalten ab lg, darunter die Tage untereinander */
+.kal-woche {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+}
+
+@media (min-width: 992px) {
+    .kal-woche {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 3px;
+    }
+
+    .kal-woche-tag {
+        min-height: 14rem;
+    }
+}
+
+.kal-woche-tag {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 4px;
+    background: var(--bs-body-bg);
+}
+
+.kal-woche-tag:not(.hat) {
+    background: var(--bs-tertiary-bg);
+}
+
+.kal-woche-tag.gewaehlt {
+    outline: 2px solid var(--projekt-farbe);
+}
+
+.kal-woche-kopf {
+    margin: 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.kal-woche-datum {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    background: none;
+    text-align: left;
+    font-weight: 600;
+    color: inherit;
+}
+
+button.kal-woche-datum:hover,
+button.kal-woche-datum:focus-visible {
+    color: var(--projekt-farbe);
+}
+
+.kal-woche-tag.wochenende .kal-woche-wt,
+.kal-woche-tag.aus .kal-woche-datum {
+    color: var(--bs-secondary-color);
+}
+
+.kal-woche-n {
+    margin-left: auto;
+    font-weight: normal;
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-woche-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0.35rem;
+}
+
+.kal-woche-ereignis {
+    display: block;
+    width: 100%;
+    padding: 0.2rem 0.35rem;
+    border: 0;
+    border-left: 3px solid var(--gruppe-farbe, var(--bs-border-color));
+    border-radius: 0 3px 3px 0;
+    background: none;
+    text-align: left;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    color: inherit;
+}
+
+.kal-woche-ereignis:hover,
+.kal-woche-ereignis:focus-visible {
+    background: var(--bs-tertiary-bg);
+}
+
+.kal-woche-typ,
+.kal-woche-info {
+    display: block;
+    color: var(--bs-secondary-color);
+}
+
+.kal-woche-typ {
+    font-size: 0.7rem;
+}
+
+.kal-woche-titel {
+    display: block;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.kal-woche-hinweis {
+    margin: 0;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.78rem;
+    color: var(--bs-secondary-color);
+}
+
+.kal-woche-laufend {
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.kal-woche-laufend li {
+    border-left: 3px solid var(--gruppe-farbe, transparent);
+    padding-left: 0.4rem;
+    margin-bottom: 0.15rem;
+}
+
 /* Tag: Seitenleiste */
 .kal-tag-hintergrund {
     position: fixed;
@@ -362,6 +512,11 @@ body.kal-offen {
     padding: 0.6rem 0.75rem;
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
+}
+
+/* aus der Wochenansicht angeklickt */
+.kal-karte.fokus {
+    box-shadow: 0 0 0 2px var(--projekt-farbe);
 }
 
 .kal-karte .ereignis-typ {
