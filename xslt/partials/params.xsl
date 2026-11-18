@@ -2,13 +2,13 @@
 <xsl:stylesheet
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-    <xsl:param name="directory_name">wohin-in-wien-damals_static</xsl:param>
+    <xsl:param name="directory_name">wien-wo-es-war_static</xsl:param>
     <xsl:param name="project_title">Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939</xsl:param>
     <!-- offen (PLANUNG.md, Abschnitt 13) -->
     <xsl:param name="redmine_id"/>
     <xsl:param name="project_short_title">Wohin in Wien damals</xsl:param>
     <xsl:param name="default_lang">de</xsl:param>
-    <xsl:param name="github_url">https://github.com/arthur-schnitzler/wohin-in-wien-damals_static</xsl:param>
+    <xsl:param name="github_url">https://github.com/arthur-schnitzler/wien-wo-es-war_static</xsl:param>
     <xsl:param name="html_title">Wohin in Wien damals</xsl:param>
     <xsl:param name="project_logo">img/logo.jpg</xsl:param>
     <!-- Symbol für die Navigationsleiste (aus android-chrome-192x192.png); Bilder in html/img/, Originale in vorlagen/ -->

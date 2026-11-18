@@ -32,11 +32,11 @@
       <div xml:id="lizenz">
         <head>Lizenz und Nachnutzung</head>
         <p>Die Daten auf dieser Website stehen unter der Lizenz <ref target="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0 International (CC BY 4.0)</ref>. Sie dürfen sie mit Namensnennung frei verwenden, bearbeiten und weitergeben. Bitte nennen Sie »Wohin in Wien damals« und die Quelle des jeweiligen Eintrags; einen Zitiervorschlag gibt es auf jeder Ereigniskarte. Die verlinkten Quellen (Burgtheater, Spielplan der Wiener Oper, ANNO u. a.) haben eigene Nutzungsbedingungen.</p>
-        <p>Der Programmcode der Website steht unter der <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_static/blob/main/LICENSE">MIT-Lizenz</ref>.</p>
+        <p>Der Programmcode der Website steht unter der <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_static/blob/main/LICENSE">MIT-Lizenz</ref>.</p>
       </div>
       <div>
         <head>Technik</head>
-        <p>Die Website ist statisch und wird aus den TEI-Daten mit XSLT erzeugt. Code: <ref target="https://github.com/arthur-schnitzler/wohin-in-wien-damals_static">wohin-in-wien-damals_static</ref>, Daten: <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_data">wien-wo-es-war_data</ref>.</p>
+        <p>Die Website ist statisch und wird aus den TEI-Daten mit XSLT erzeugt. Code: <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_static">wien-wo-es-war_static</ref>, Daten: <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_data">wien-wo-es-war_data</ref>.</p>
         <p>Die Website befindet sich im Aufbau.</p>
       </div>
     </body>

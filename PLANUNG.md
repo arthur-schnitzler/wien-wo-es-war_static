@@ -1,6 +1,6 @@
 # Wohin in Wien damals – Planung der Website
 
-Stand: 17. November 2026 · Code: `wohin-in-wien-damals_static` · Daten: [`arthur-schnitzler/wien-wo-es-war_data`](https://github.com/arthur-schnitzler/wien-wo-es-war_data)
+Stand: 17. November 2026 · Code: `wien-wo-es-war_static` · Daten: [`arthur-schnitzler/wien-wo-es-war_data`](https://github.com/arthur-schnitzler/wien-wo-es-war_data)
 
 ## Kurzfassung
 
@@ -258,7 +258,7 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 
 | Frage | Antwort |
 |---|---|
-| directory_name | `wohin-in-wien-damals_static` |
+| directory_name | `wien-wo-es-war_static` |
 | project_title | `Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939` |
 | project_short_title | `Wohin in Wien damals` |
 | default_lang | `de` |
@@ -286,7 +286,7 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 ### Verzeichnisstruktur (Auszug)
 
 ```
-wohin-in-wien-damals_static/
+wien-wo-es-war_static/
 ├── PLANUNG.md
 ├── build.xml
 ├── check_entities_xsl.py          # Sync aus schnitzler-chronik-static/xslt/export

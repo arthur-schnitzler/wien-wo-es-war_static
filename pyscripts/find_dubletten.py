@@ -39,7 +39,7 @@ AUSGABE = ROOT / "berichte" / "auffuehrungsdubletten.csv"
 # dann die URLs aller Einträge der Gruppe (aufsteigend); ohne Kopfzeile
 AUSGABE_PMB = ROOT / "berichte" / "auffuehrungsdubletten_pmb.csv"
 PMB_ENTITY = "https://pmb.acdh.oeaw.ac.at/entity/"
-SITE = "https://arthur-schnitzler.github.io/wohin-in-wien-damals_static"
+SITE = "https://arthur-schnitzler.github.io/wien-wo-es-war_static"
 
 NS = {"tei": "http://www.tei-c.org/ns/1.0"}
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"

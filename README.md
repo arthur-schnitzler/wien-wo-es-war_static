@@ -65,8 +65,8 @@ Der Workflow [build.yml](.github/workflows/build.yml) baut die Seite und veröff
 
 ## Docker
 
-* Image bauen: `docker build -f docker/Dockerfile -t wohin-in-wien-damals_static .`
-* Container starten: `docker run -p 80:80 --rm --name wohin-in-wien-damals_static wohin-in-wien-damals_static`
+* Image bauen: `docker build -f docker/Dockerfile -t wien-wo-es-war_static .`
+* Container starten: `docker run -p 80:80 --rm --name wien-wo-es-war_static wien-wo-es-war_static`
 
 ## Lizenzen
 

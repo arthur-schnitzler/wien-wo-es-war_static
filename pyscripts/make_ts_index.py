@@ -163,7 +163,7 @@ def importieren(docs):
             "fields": SCHEMA_FELDER,
             "default_sorting_field": "datum",
             "metadata": {
-                "description": "https://github.com/arthur-schnitzler/wohin-in-wien-damals_static"
+                "description": "https://github.com/arthur-schnitzler/wien-wo-es-war_static"
             },
         }
     )
