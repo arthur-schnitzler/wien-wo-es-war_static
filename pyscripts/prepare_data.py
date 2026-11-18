@@ -207,7 +207,7 @@ def ereignis_daten(ev, typen, urheber_von, fehlende_typen):
 URI_PRAEFIXE = {
     "pmb": "https://pmb.acdh.oeaw.ac.at/entity/",
     "burgtheater": "https://kulturerbe.burgtheater.at/event/",
-    "spielplan-oper_18691945": "https://www.mdw.ac.at/imi/operapolitics/spielplan-wiener-oper/web/opus/",
+    "spielplan-oper": "https://www.mdw.ac.at/imi/operapolitics/spielplan-wiener-oper/web/opus/",
     "anno": "https://anno.onb.ac.at/cgi-content/anno?",
     "schnitzler-kultur": "https://schnitzler-kultur.acdh.oeaw.ac.at/",
     "schnitzler-briefe": "https://schnitzler-briefe.acdh.oeaw.ac.at/",

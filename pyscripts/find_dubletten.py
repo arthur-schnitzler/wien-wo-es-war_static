@@ -49,12 +49,12 @@ REZENSION = "wird rezensiert in"
 # Quelle eines Ereignisses: der erste vorhandene dieser Subtypes
 QUELLEN = [
     ("burgtheater", "Burgtheater"),
-    ("spielplan-oper_18691945", "Spielplan Oper"),
+    ("spielplan-oper", "Spielplan Oper"),
     ("brahms-online", "Brahms online"),
     ("schnitzler-kultur", "Schnitzler-Kultur"),
     ("schnitzler-briefe", "Schnitzler-Briefe"),
 ]
-HAUSQUELLEN = {"burgtheater", "spielplan-oper_18691945"}
+HAUSQUELLEN = {"burgtheater", "spielplan-oper"}
 # Für die Kategorien 2 und 5 zählen nur Aufführungen; Proben und Lesungen finden neben Vorstellungen statt
 AUFFUEHRUNGSGRUPPEN = {"theater", "oper", "ballett"}
 SCHNITZLER = {"schnitzler-kultur", "schnitzler-briefe"}

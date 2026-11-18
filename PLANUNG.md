@@ -47,7 +47,7 @@ Alle `@key`-Verweise lösen in den Registern auf. Die `xml:id`s sind über Ereig
   <note type="listorg"><listOrg><org role="veranstaltet von">
     <orgName key="pmb36689">K.K. Hof-Oper</orgName></org></listOrg></note>
   <idno type="URL" subtype="pmb">https://pmb.acdh.oeaw.ac.at/entity/556520/</idno>
-  <idno type="URL" subtype="spielplan-oper_18691945">https://www.mdw.ac.at/imi/operapolitics/…#op_1900-01-01_139</idno>
+  <idno type="URL" subtype="spielplan-oper">https://www.mdw.ac.at/imi/operapolitics/…#op_1900-01-01_139</idno>
   <listBibl><bibl type="collections" n="122">Spielplan Oper 1850–1945</bibl></listBibl>
   <listBibl><bibl><title key="pmb30823">Lohengrin</title>
     <note type="relation-type">ist Aufführung von</note></bibl></listBibl>
@@ -67,7 +67,7 @@ Insgesamt 135.487 `idno`, 1–6 pro Ereignis, alle `http(s)`, keine Leerzeichen.
 |---|---|---|
 | `pmb` | 64.550 | PMB-Eintrag; 73 Ereignisse haben nach Zusammenführungen zwei |
 | `burgtheater` | 31.524 | Kulturerbe digital des Burgtheaters |
-| `spielplan-oper_18691945` | 26.180 | Spielplan der Wiener Oper (mdw) |
+| `spielplan-oper` | 26.180 | Spielplan der Wiener Oper (mdw) |
 | `anno` | 5.800 | Theaterzettel in ANNO, mit Anker auf die Vorstellung |
 | `schnitzler-kultur` | 5.393 | Schnitzler: Kulturveranstaltungen |
 | `brahms-online` | 1.733 | Brahms online |
@@ -192,7 +192,7 @@ GitHub Pages erlaubt laut Doku 1 GB pro Site (vor dem ersten Deploy prüfen). Ko
 - „Link kopieren“ (Permalink `pmbNNNN.html`) und ein Zitiervorschlag.
 
 **Korrekturen an `list-of-relevant-uris.xml`** (in der Projektkopie; dieselben Korrekturen auch upstream in `schnitzler-chronik-static/xslt/export`):
-- `spielplan-oper_1869–1945` (mit Halbgeviertstrich) → `spielplan-oper_18691945`. Sonst fehlen die Oper-Links bei 26.180 Ereignissen.
+- `spielplan-oper_1869–1945` (mit Halbgeviertstrich) → `spielplan-oper`. Sonst fehlen die Oper-Links bei 26.180 Ereignissen.
 - Die Farbe `#337ab7a` ist ungültig (7 Stellen). Die Pill wäre weiße Schrift ohne Hintergrund.
 - `burgtheater` steht zweimal in der Liste, das ergibt zwei Pills für denselben Link → auf einen Eintrag zusammenführen.
 - Fehlende Subtypes aus den Registern ergänzen: `schnitzler-kino`, `oeml`, `imdb`, `exemplar`, `schnitzler-mikrofilme` (die Liste kennt nur `schnitzler-mikrofilme-daten`), `wiener-rundschau`, `tillich-briefe`, `freud`, `gtrans`. `tmp-burgtheater` und `insel` bewusst ausschließen; `idno[@type='URL']` ohne Subtype fängt der neutrale Fallback-Link auf.

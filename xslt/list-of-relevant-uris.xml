@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Projektkopie von schnitzler-chronik-static/xslt/export/list-of-relevant-uris.xml.
 Abweichungen (sollen auch upstream übernommen werden, PLANUNG.md Abschnitt 6):
-* spielplan-oper_18691945 wie in den Daten (upstream: spielplan-oper_1869–1945), gültige Farbe
+* spielplan-oper wie in den Daten (upstream: spielplan-oper_1869–1945), gültige Farbe
 * burgtheater nur einmal
 * ergänzt: schnitzler-kino, schnitzler-mikrofilme, oeml, imdb, exemplar, wiener-rundschau,
   tillich-briefe, freud, gtrans, wien-wo-es-war
@@ -19,7 +19,7 @@ Bewusst nicht aufgenommen: tmp-burgtheater (keine URL), insel (Platzhalter-Domai
         <color>#02305c</color>
     </item>
     <item group="quelle">
-        <abbr>spielplan-oper_18691945</abbr>
+        <abbr>spielplan-oper</abbr>
         <caption>Spielplan Oper</caption>
         <color>#1F7A55</color>
     </item>
