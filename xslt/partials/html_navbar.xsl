@@ -40,6 +40,32 @@
                                     </li>
                                 </ul>
                             </li>
+                            <!-- externe Links, Reihenfolge nach Anzahl der Ereignisse (pyscripts/prepare_data.py) -->
+                            <xsl:variable name="datengeber-datei" select="'../../data/indices/datengeber.xml'"/>
+                            <xsl:variable name="datengeber" select="if (doc-available($datengeber-datei)) then doc($datengeber-datei)/datengeber/datengeber else ()"/>
+                            <xsl:if test="$datengeber">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Datengeber</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="datengeber.html">Datengeber</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider"/>
+                                        </li>
+                                        <xsl:for-each select="$datengeber">
+                                            <li>
+                                                <a class="dropdown-item" href="{@url}" target="_blank" rel="noopener">
+                                                    <xsl:value-of select="."/>
+                                                    <xsl:text> </xsl:text>
+                                                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"/>
+                                                    <span class="visually-hidden"> (externer Link, öffnet in neuem Fenster)</span>
+                                                </a>
+                                            </li>
+                                        </xsl:for-each>
+                                    </ul>
+                                </li>
+                            </xsl:if>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projekt</a>
                                 <ul class="dropdown-menu">

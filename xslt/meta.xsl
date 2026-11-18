@@ -16,10 +16,10 @@
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select=".//tei:title[@type='main'][1]/text()"/>
+            <xsl:value-of select="normalize-space((//tei:titleStmt/tei:title[@type = 'main'], //tei:titleStmt/tei:title[@level = 'a'], //tei:titleStmt/tei:title)[1])"/>
         </xsl:variable>
         <xsl:variable name="teiSource">
-            <xsl:value-of select="data(tei:TEI/@xml:id)"/>
+            <xsl:value-of select="(tei:TEI/@xml:id, tokenize(document-uri(/), '/')[last()])[1]"/>
         </xsl:variable>
         <xsl:variable name="link">
             <xsl:value-of select="replace($teiSource, '.xml', '.html')"/>
@@ -73,10 +73,39 @@
         <div id="{(@xml:id, generate-id())[1]}"><xsl:apply-templates/></div>
     </xsl:template>
     <xsl:template match="tei:head">
-        <h2 class="fs-4 mt-4"><xsl:apply-templates/></h2>
+        <xsl:variable name="ebene" select="min((count(ancestor::tei:div) + 1, 6))"/>
+        <xsl:element name="h{$ebene}">
+            <xsl:attribute name="class" select="if ($ebene = 2) then 'fs-4 mt-4' else 'fs-5 mt-3'"/>
+            <xsl:apply-templates/>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="tei:ref[@target]">
         <a href="{@target}"><xsl:apply-templates/></a>
+    </xsl:template>
+    <!-- Anzahl der Ereignisse je Datengeber (data/indices/datengeber.xml, pyscripts/prepare_data.py) -->
+    <xsl:variable name="datengeber-datei" select="'../data/indices/datengeber.xml'"/>
+    <xsl:variable name="datengeber" select="if (doc-available($datengeber-datei)) then doc($datengeber-datei)/datengeber/datengeber else ()"/>
+    <xsl:decimal-format name="de" decimal-separator="," grouping-separator="."/>
+    <xsl:template match="tei:div[@type = 'datengeber'][@xml:id]" priority="2">
+        <xsl:variable name="eintrag" select="$datengeber[@subtype = current()/@xml:id]"/>
+        <div id="{@xml:id}">
+            <xsl:apply-templates/>
+            <xsl:if test="$eintrag">
+                <p class="text-body-secondary">
+                    <xsl:value-of select="format-number(xs:integer($eintrag/@n), '#.###', 'de')"/>
+                    <xsl:text> Ereignisse in „Wien, wo es war“</xsl:text>
+                </p>
+            </xsl:if>
+        </div>
+    </xsl:template>
+    <xsl:template match="tei:list">
+        <ul><xsl:apply-templates/></ul>
+    </xsl:template>
+    <xsl:template match="tei:item">
+        <li><xsl:if test="@xml:id"><xsl:attribute name="id" select="@xml:id"/></xsl:if><xsl:apply-templates/></li>
+    </xsl:template>
+    <xsl:template match="tei:title">
+        <em><xsl:apply-templates/></em>
     </xsl:template>
     <xsl:template match="tei:lb">
         <br/>

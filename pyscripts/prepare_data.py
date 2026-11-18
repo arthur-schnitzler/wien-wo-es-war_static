@@ -389,6 +389,55 @@ def lies_uri_liste():
     return liste
 
 
+def schreibe_datengeber(jahre):
+    """data/meta/datengeber.xml (aus dem Daten-Repo) -> data/indices/datengeber.xml.
+
+    Jedes Element mit @xml:id im body ist ein möglicher Datengeber: @xml:id ist der idno/@subtype in den
+    Ereignissen, verlinkt wird die erste ref[@type='URL'] darin, beschriftet mit head (bei list/item mit
+    dem Text vor dem Link). Gezählt werden Ereignisse mit mindestens einer solchen idno; sortiert nach
+    Anzahl absteigend. Datengeber ohne Ereignisse fallen weg. Fehlt die Datei, bleibt die Liste leer.
+    """
+    root = etree.Element("datengeber")
+    quelle = ROOT / "data" / "meta" / "datengeber.xml"
+    if not quelle.exists():
+        print(f"{quelle} fehlt, Menü „Datengeber“ bleibt leer")
+        schreibe_xml(INDICES / "datengeber.xml", root)
+        return
+    pro_subtype = Counter()
+    for ereignisse in jahre.values():
+        for d in ereignisse:
+            for subtype in {s for s, _ in d.get("uris", [])}:
+                pro_subtype[subtype] += 1
+    eintraege = []
+    ohne = []
+    body = etree.parse(str(quelle)).find(".//tei:body", NS)
+    for el in body.iterfind(".//*[@xml:id]", NS):
+        subtype = el.get(XML_ID)
+        ref = el.find(".//tei:ref[@type='URL']", NS)
+        if ref is None or not ref.get("target"):
+            ohne.append(subtype)
+            continue
+        head = el.find("tei:head", NS)
+        if head is not None:
+            name = text(head)
+        else:
+            name = " ".join((el.text or "").split()).rstrip(" ,:–")
+        n = pro_subtype[subtype]
+        if not n:
+            ohne.append(subtype)
+            continue
+        eintraege.append((n, name or subtype, ref.get("target"), subtype))
+    eintraege.sort(key=lambda e: (-e[0], e[1]))
+    for n, name, url, subtype in eintraege:
+        etree.SubElement(
+            root, "datengeber", url=url, n=str(n), subtype=subtype
+        ).text = name
+    schreibe_xml(INDICES / "datengeber.xml", root)
+    print("Datengeber: " + ", ".join(f"{name} {n}" for n, name, _, _ in eintraege))
+    if ohne:
+        print("nicht im Menü (keine Ereignisse oder kein Link): " + ", ".join(ohne))
+
+
 def main():
     gruppen, typen = lies_konfiguration()
     namen, urheber_von = lies_register()
@@ -539,6 +588,7 @@ def main():
     schreibe_xml(INDICES / "ereignistypen.xml", et_root)
 
     schreibe_xml(INDICES / "listevent.xml", gesamt)
+    schreibe_datengeber(jahre)
     erwaehnungen = schreibe_erwaehnungen(jahre, namen)
 
     # tage.xml: jeder Tag, an dem ein Ereignis beginnt oder ein Ereignis mit Zeitraum läuft
