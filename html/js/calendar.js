@@ -1,5 +1,5 @@
 /**
- * Kalender – Wohin in Wien damals
+ * Kalender – Wien, wo es war
  *
  * Fork des SimpleCalendar aus schnitzler-chronik-static/html/js/calendar.js
  * (PLANUNG.md, Abschnitt 5). Änderungen gegenüber der Chronik:

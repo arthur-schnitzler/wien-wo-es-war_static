@@ -2,7 +2,7 @@
 <!--
     Projektschicht über entities.xsl (aus schnitzler-chronik-static, synchronisiert mit
     check_entities_xsl.py). Hier stehen nur Einstellungen und Überschreibungen für
-    Wohin in Wien damals; entities.xsl selbst bleibt unverändert.
+    Wien, wo es war; entities.xsl selbst bleibt unverändert.
 
     Die Ereignisse einer Entität stehen als note[@type='mentions'] in den Registerkopien
     (pyscripts/prepare_data.py), entities.xsl zeigt sie im Normalmodus an.

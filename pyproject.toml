@@ -1,7 +1,7 @@
 [project]
 name = "wien-wo-es-war_static"
 version = "0.1.0"
-description = "Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939"
+description = "Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

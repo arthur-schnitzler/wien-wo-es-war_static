@@ -40,7 +40,7 @@
     if (liste) {
       ziel.append(liste);
     }
-    document.title = titel + " – Wohin in Wien damals";
+    document.title = titel + " – Wien, wo es war";
   }
 
   if (!gueltig) {

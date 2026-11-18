@@ -4,7 +4,7 @@ Abweichungen (sollen auch upstream übernommen werden, PLANUNG.md Abschnitt 6):
 * spielplan-oper_18691945 wie in den Daten (upstream: spielplan-oper_1869–1945), gültige Farbe
 * burgtheater nur einmal
 * ergänzt: schnitzler-kino, schnitzler-mikrofilme, oeml, imdb, exemplar, wiener-rundschau,
-  tillich-briefe, freud, gtrans, wohin-in-wien-damals
+  tillich-briefe, freud, gtrans, wien-wo-es-war
 * @group (quelle, projekt, normdaten) legt die Reihenfolge auf den Ereigniskarten fest;
   innerhalb einer Gruppe gilt die Dokumentreihenfolge. mam:idnosToLinks ignoriert @group.
 * textcolor, wo weiße Schrift auf der Farbe weniger als 4,5:1 Kontrast hätte
@@ -320,8 +320,8 @@ Bewusst nicht aufgenommen: tmp-burgtheater (keine URL), insel (Platzhalter-Domai
         <color>#2E6F73</color>
     </item>
     <item group="projekt">
-        <abbr>wohin-in-wien-damals</abbr>
-        <caption>Wohin in Wien damals</caption>
+        <abbr>wien-wo-es-war</abbr>
+        <caption>Wien, wo es war</caption>
         <color>#976A37</color>
     </item>
     <item group="normdaten">

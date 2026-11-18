@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 JS_DATA = ROOT / "html" / "js-data"
-COLLECTION = "wohin-in-wien-damals"  # Alias, auf den html/js/search.js zugreift
+COLLECTION = "wien-wo-es-war"  # Alias, auf den html/js/search.js zugreift
 REZENSION = "wird rezensiert in"
 
 SCHEMA_FELDER = [

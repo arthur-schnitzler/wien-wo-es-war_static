@@ -33,7 +33,7 @@ TEI_NS = "http://www.tei-c.org/ns/1.0"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 NS = {"tei": TEI_NS, "xml": "http://www.w3.org/XML/1998/namespace"}
 # Namensraum für projekteigene Zusatzattribute in data/indices/listevent.xml
-WIW_NS = "https://wohin-in-wien-damals.acdh.oeaw.ac.at/ns"
+WIW_NS = "https://wien-wo-es-war.acdh.oeaw.ac.at/ns"
 
 # Typ für Ereignisse ohne eventName/@n (PLANUNG.md, Datenhinweise)
 TYP_OHNE_ANGABE = "Veranstaltung"
@@ -263,11 +263,11 @@ def tei_kopf(titel):
     header = etree.SubElement(root, tei("teiHeader"))
     fd = etree.SubElement(header, tei("fileDesc"))
     ts = etree.SubElement(fd, tei("titleStmt"))
-    etree.SubElement(ts, tei("title"), level="s").text = "Wohin in Wien damals"
+    etree.SubElement(ts, tei("title"), level="s").text = "Wien, wo es war"
     etree.SubElement(ts, tei("title"), type="main").text = titel
     etree.SubElement(
         etree.SubElement(fd, tei("publicationStmt")), tei("p")
-    ).text = "Wohin in Wien damals, automatisch erzeugte Daten"
+    ).text = "Wien, wo es war, automatisch erzeugte Daten"
     etree.SubElement(
         etree.SubElement(fd, tei("sourceDesc")), tei("p")
     ).text = "Zusammengeführt aus den Jahresdateien editions/listevent_JJJJ.xml durch pyscripts/prepare_data.py"

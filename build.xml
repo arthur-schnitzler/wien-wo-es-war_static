@@ -13,7 +13,7 @@
     Die Stylesheets erzeugen keine Namensraum-Deklarationen (exclude-result-prefixes="#all",
     kein XHTML-Default-Namensraum); ein nachträgliches <replace> über alle Dateien entfällt.
 -->
-<project basedir="." name="wohin-in-wien-damals" default="all">
+<project basedir="." name="wien-wo-es-war" default="all">
     <loadfile property="DATAHASH" srcFile="./datahash.txt" failonerror="false"/>
     <property name="DATAHASH" value=""/>
     <property name="target" value="./html"/>

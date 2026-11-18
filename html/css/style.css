@@ -34,7 +34,7 @@ main:has(#how-to-cite)>.container {
 main:has(#how-to-cite)>.container> :has(> #how-to-cite) {
     margin-top: auto;
 }
-/* ===== Wohin in Wien damals ===== */
+/* ===== Wien, wo es war ===== */
 
 :root {
     --projekt-farbe: #976A37;

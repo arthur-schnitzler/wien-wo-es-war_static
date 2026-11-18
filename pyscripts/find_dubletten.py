@@ -43,7 +43,7 @@ SITE = "https://arthur-schnitzler.github.io/wien-wo-es-war_static"
 
 NS = {"tei": "http://www.tei-c.org/ns/1.0"}
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
-WIW = "{https://wohin-in-wien-damals.acdh.oeaw.ac.at/ns}"
+WIW = "{https://wien-wo-es-war.acdh.oeaw.ac.at/ns}"
 REZENSION = "wird rezensiert in"
 
 # Quelle eines Ereignisses: der erste vorhandene dieser Subtypes

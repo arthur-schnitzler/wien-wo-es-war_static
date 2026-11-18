@@ -42,7 +42,7 @@
     <xsl:decimal-format name="de" decimal-separator="," grouping-separator="."/>
 
     <xsl:template match="/">
-        <xsl:variable name="doc_title" select="'Wohin in Wien damals?'"/>
+        <xsl:variable name="doc_title" select="'Wien, wo es war'"/>
         <html class="h-100" lang="{$default_lang}">
             <head>
                 <xsl:call-template name="html_head">

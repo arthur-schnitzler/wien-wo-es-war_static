@@ -3,11 +3,11 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title level="s">Wohin in Wien damals</title>
+        <title level="s">Wien, wo es war</title>
         <title type="main">Über das Projekt</title>
       </titleStmt>
       <publicationStmt>
-        <p>Wohin in Wien damals</p>
+        <p>Wien, wo es war</p>
       </publicationStmt>
       <sourceDesc>
         <p>Vorläufiger Text aus dem Static-Repo; wird durch meta/ im Daten-Repo ersetzt.</p>
@@ -17,7 +17,7 @@
   <text>
     <body>
       <div>
-        <p>»Wohin in Wien damals?« macht kulturelle Ereignisse in Wien zwischen 1860 und 1939 durchsuchbar: Theater- und Opernaufführungen, Konzerte, Lesungen, Bälle, Filmvorführungen und mehr. Über einen Kalender ist jeder Tag dieses Zeitraums erreichbar.</p>
+        <p>»Wien, wo es war« macht kulturelle Ereignisse in Wien zwischen 1860 und 1939 durchsuchbar: Theater- und Opernaufführungen, Konzerte, Lesungen, Bälle, Filmvorführungen und mehr. Über einen Kalender ist jeder Tag dieses Zeitraums erreichbar.</p>
         <p>Die Daten verbinden Einträge aus verschiedenen Aufführungsdatenbanken und Online-Quellen zeitlich und örtlich. Aufgenommen sind nur Ereignisse, die innerhalb der heutigen Wiener Stadtgrenze stattgefunden haben. Vollständig erfasst sind bisher nur die Aufführungen von Burgtheater und Oper.</p>
         <p>Die Daten werden in der <ref target="https://pmb.acdh.oeaw.ac.at">PMB – Personen der Moderne Basis</ref> gepflegt und im <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_data">Daten-Repositorium</ref> für diese Website aufbereitet.</p>
       </div>
@@ -31,7 +31,7 @@
       </div>
       <div xml:id="lizenz">
         <head>Lizenz und Nachnutzung</head>
-        <p>Die Daten auf dieser Website stehen unter der Lizenz <ref target="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0 International (CC BY 4.0)</ref>. Sie dürfen sie mit Namensnennung frei verwenden, bearbeiten und weitergeben. Bitte nennen Sie »Wohin in Wien damals« und die Quelle des jeweiligen Eintrags; einen Zitiervorschlag gibt es auf jeder Ereigniskarte. Die verlinkten Quellen (Burgtheater, Spielplan der Wiener Oper, ANNO u. a.) haben eigene Nutzungsbedingungen.</p>
+        <p>Die Daten auf dieser Website stehen unter der Lizenz <ref target="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0 International (CC BY 4.0)</ref>. Sie dürfen sie mit Namensnennung frei verwenden, bearbeiten und weitergeben. Bitte nennen Sie »Wien, wo es war« und die Quelle des jeweiligen Eintrags; einen Zitiervorschlag gibt es auf jeder Ereigniskarte. Die verlinkten Quellen (Burgtheater, Spielplan der Wiener Oper, ANNO u. a.) haben eigene Nutzungsbedingungen.</p>
         <p>Der Programmcode der Website steht unter der <ref target="https://github.com/arthur-schnitzler/wien-wo-es-war_static/blob/main/LICENSE">MIT-Lizenz</ref>.</p>
       </div>
       <div>

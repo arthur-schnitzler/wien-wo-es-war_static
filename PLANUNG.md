@@ -1,4 +1,4 @@
-# Wohin in Wien damals – Planung der Website
+# Wien, wo es war – Planung der Website
 
 Stand: 17. November 2026 · Code: `wien-wo-es-war_static` · Daten: [`arthur-schnitzler/wien-wo-es-war_data`](https://github.com/arthur-schnitzler/wien-wo-es-war_data)
 
@@ -196,7 +196,7 @@ GitHub Pages erlaubt laut Doku 1 GB pro Site (vor dem ersten Deploy prüfen). Ko
 - Die Farbe `#337ab7a` ist ungültig (7 Stellen). Die Pill wäre weiße Schrift ohne Hintergrund.
 - `burgtheater` steht zweimal in der Liste, das ergibt zwei Pills für denselben Link → auf einen Eintrag zusammenführen.
 - Fehlende Subtypes aus den Registern ergänzen: `schnitzler-kino`, `oeml`, `imdb`, `exemplar`, `schnitzler-mikrofilme` (die Liste kennt nur `schnitzler-mikrofilme-daten`), `wiener-rundschau`, `tillich-briefe`, `freud`, `gtrans`. `tmp-burgtheater` und `insel` bewusst ausschließen; `idno[@type='URL']` ohne Subtype fängt der neutrale Fallback-Link auf.
-- Einen Eintrag `wohin-in-wien-damals` ergänzen, für Rückverweise aus den anderen Projekten.
+- Einen Eintrag `wien-wo-es-war` ergänzen, für Rückverweise aus den anderen Projekten.
 - Kontrast gegen weiße Schrift prüfen; z. B. erreicht `#00ACC1` (Brahms) nicht 4,5:1 → Textfarbe pro Eintrag festlegen.
 
 ## 7. Entitätsseiten (Personen, Orte, Werke, Institutionen)
@@ -230,13 +230,13 @@ Falls die Upstream-Änderungen nicht gewünscht sind, bliebe ein lokales `entiti
 
 ## 8. Suche (Typesense)
 
-- Eine Collection `wohin-in-wien-damals`, ein Dokument pro Ereignis. Felder: `id`, `datum` (int `JJJJMMTT`, sortierbar), `jahr` (Facette, Bereich), `typ`, `gruppe`, `titel`, `werke`, `urheber`, `personen`, `orte`, `institutionen`, `quellen` (Facetten). `uris` und `tag_url` werden nur gespeichert.
+- Eine Collection `wien-wo-es-war`, ein Dokument pro Ereignis. Felder: `id`, `datum` (int `JJJJMMTT`, sortierbar), `jahr` (Facette, Bereich), `typ`, `gruppe`, `titel`, `werke`, `urheber`, `personen`, `orte`, `institutionen`, `quellen` (Facetten). `uris` und `tag_url` werden nur gespeichert.
 - UI: `search.xsl` und `search.js` aus dem Cookiecutter, angepasst. Suchfeld, Jahresbereich, die Facetten von oben, Sortierung nach Datum. Treffer erscheinen im Stil der Ereigniskarte mit URI-Links und verlinken auf `TAG.html#pmbNNNN`.
 - `pyscripts/make_ts_index.py`: die Cookiecutter-Vorlage, umgeschrieben von Volltext auf Ereignisse. Der Admin-Key liegt als GitHub-Secret `TYPESENSE_API_KEY`, der Search-only-Key steht in `search.js`.
 
 ## 9. Startseite, Register, Projektseiten
 
-- **Startseite:** Titel „Wohin in Wien damals?“, Datumsfeld, „Heute vor 100 Jahren“, Zahlen (Ereignisse, Spielstätten, Werke, Personen), Einstiege zu Kalender, Suche und Registern, Quellen mit Links. Optional „An diesem Tag“: derselbe Kalendertag über alle Jahre, aus 366 kleinen JSON-Dateien.
+- **Startseite:** Titel „Wien, wo es war“, Datumsfeld, „Heute vor 100 Jahren“, Zahlen (Ereignisse, Spielstätten, Werke, Personen), Einstiege zu Kalender, Suche und Registern, Quellen mit Links. Optional „An diesem Tag“: derselbe Kalendertag über alle Jahre, aus 366 kleinen JSON-Dateien.
 - **Register:** Tabulator-Tabellen wie in `schnitzler-kultur`, zusätzlich eine sortierbare Spalte „Ereignisse“. Die Orte auch als Karte der Spielstätten.
 - **Über das Projekt / Quellen:**
   - Herkunft und Auswahlkriterien, aus dem README des Daten-Repos.
@@ -259,8 +259,8 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 | Frage | Antwort |
 |---|---|
 | directory_name | `wien-wo-es-war_static` |
-| project_title | `Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939` |
-| project_short_title | `Wohin in Wien damals` |
+| project_title | `Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939` |
+| project_short_title | `Wien, wo es war` |
 | default_lang | `de` |
 | github_org | `arthur-schnitzler` |
 | base_url | offen (Abschnitt 13) |
@@ -275,7 +275,7 @@ uvx cookiecutter gh:acdh-oeaw/dse-static-cookiecutter --overwrite-if-exists
 
 - **`shellscripts/fetch_data.sh`:** Das Skript erwartet im Daten-Repo einen Ordner `data/`, dort liegen `editions/` und `indices/` aber im Wurzelverzeichnis. Nach dem Klonen also `editions/`, `indices/` (und künftig `meta/`) nach `data/` verschieben.
 - **Entfernen:** Beispieldaten, `noske-search.*`, `toc.xsl` („Editionseinheiten“), `editions.xsl`, `oai-pmh/`, `api.xsl`.
-- **`params.xsl`:** `current-edition = 'wohin-in-wien-damals'` und `current-colour` ergänzen.
+- **`params.xsl`:** `current-edition = 'wien-wo-es-war'` und `current-colour` ergänzen.
 - **Navigation:** Kalender · Suche · Register (Personen, Orte, Werke, Institutionen) · Projekt.
 - **Vendor:** Der Cookiecutter bringt instantsearch, typesense-instantsearch-adapter, Leaflet (mit markercluster) und DataTables mit. Für die Register wie in `schnitzler-kultur` (`tabulator_js.xsl`) kommt Tabulator in fester Version dazu; `openseadragon`, `acdh-noske-search` und `i18next` können weg.
 - **`.gitignore`:** `html/js-data/` ergänzen. In VS Code `html/` aus Dateiüberwachung und Suche ausnehmen (~100.000 Dateien).
@@ -351,7 +351,7 @@ Die Phasen 1 und 2 decken die beiden Muss-Anforderungen ab und kommen deshalb zu
 
 ## 13. Offene Fragen
 
-1. **Domain / `base_url`:** z. B. `wohin-in-wien-damals.acdh.oeaw.ac.at`? Hosting unter der GitHub-Org `arthur-schnitzler`?
+1. **Domain / `base_url`:** z. B. `wien-wo-es-war.acdh.oeaw.ac.at`? Hosting unter der GitHub-Org `arthur-schnitzler`?
 2. **Redmine-ID** für das Impressum.
 3. **Tagesseite kanonisch** (Empfehlung) oder doch eine Vollseite pro Ereignis? Letzteres etwa verdreifacht die Größe.
 4. **Typesense-Instanz:** `typesense.acdh-dev.oeaw.ac.at` wie bei den Schnitzler-Projekten oder `typesense.acdh.oeaw.ac.at` wie im Cookiecutter? Und die Keys.

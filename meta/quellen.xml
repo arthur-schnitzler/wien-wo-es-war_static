@@ -3,11 +3,11 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title level="s">Wohin in Wien damals</title>
+        <title level="s">Wien, wo es war</title>
         <title type="main">Quellen</title>
       </titleStmt>
       <publicationStmt>
-        <p>Wohin in Wien damals</p>
+        <p>Wien, wo es war</p>
       </publicationStmt>
       <sourceDesc>
         <p>Vorläufiger Text aus dem Static-Repo; wird durch meta/ im Daten-Repo ersetzt.</p>

@@ -50,7 +50,7 @@ def lies_ereignisse():
                 "von": von,
                 "bis": bis,
                 "unbestimmt": ev.get(
-                    "{https://wohin-in-wien-damals.acdh.oeaw.ac.at/ns}unbestimmt"
+                    "{https://wien-wo-es-war.acdh.oeaw.ac.at/ns}unbestimmt"
                 )
                 == "true",
                 "urls": [

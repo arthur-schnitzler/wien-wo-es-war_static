@@ -12,7 +12,7 @@
     protocol: "https",
     apiKey: "SEARCH_ONLY_KEY_EINTRAGEN",
   };
-  const COLLECTION = "wohin-in-wien-damals";
+  const COLLECTION = "wien-wo-es-war";
   // ========================================================================================
 
   const MONATE = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",

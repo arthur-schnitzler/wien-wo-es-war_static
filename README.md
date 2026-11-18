@@ -1,4 +1,4 @@
-# Wohin in Wien damals. Kulturelle Ereignisse in Wien 1860–1939
+# Wien, wo es war. Kulturelle Ereignisse in Wien 1860–1939
 
 Statische Website, die kulturelle Ereignisse in Wien 1860–1939 über einen Kalender und eine Suche zugänglich macht.
 
