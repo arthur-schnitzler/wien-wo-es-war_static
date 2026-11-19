@@ -13,14 +13,16 @@
     });
   });
 
-  // „Heute vor 100 Jahren“: Link auf die Tagesseite des Datums vor n Jahren
-  document.querySelectorAll("a[data-heute-vor]").forEach(function (a) {
+  // Datumsfeld mit „heute vor n Jahren“ vorbelegen (sofern im erlaubten Zeitraum)
+  document.querySelectorAll("input[data-heute-vor]").forEach(function (input) {
     var heute = new Date();
-    var jahr = heute.getFullYear() - Number(a.dataset.heuteVor);
+    var jahr = heute.getFullYear() - Number(input.dataset.heuteVor);
     var monat = String(heute.getMonth() + 1).padStart(2, "0");
     var tag = String(heute.getDate()).padStart(2, "0");
-    a.href = jahr + "-" + monat + "-" + tag + ".html";
-    a.title = tag + "." + monat + "." + jahr;
+    var wert = jahr + "-" + monat + "-" + tag;
+    if ((!input.min || wert >= input.min) && (!input.max || wert <= input.max)) {
+      input.value = wert;
+    }
   });
 
   function kopieren(text, knopf) {

@@ -73,10 +73,10 @@
                                 <div>
                                     <label for="datum-sprung" class="form-label mb-1">Wohin an einem bestimmten Tag?</label>
                                     <input type="date" id="datum-sprung" name="datum" class="form-control"
-                                        min="{$start-year}-01-01" max="{$end-year}-12-31" value="1900-01-01" required="required"/>
+                                        min="{$start-year}-01-01" max="{$end-year}-12-31" value="1900-01-01"
+                                        data-heute-vor="100" required="required"/>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Zum Tag</button>
-                                <a class="btn btn-outline-secondary" href="kalender.html" data-heute-vor="100">Heute vor 100 Jahren</a>
                                 <a class="btn btn-link" href="kalender.html">Zum Kalender</a>
                             </form>
                         </div>
@@ -124,7 +124,9 @@
 
                         <h2 class="fs-4 mt-4">Quellen</h2>
                         <p>
-                            <xsl:text>Die Daten stammen aus dem </xsl:text>
+                            <xsl:text>Die Daten stammen von </xsl:text>
+                            <a href="https://anno.onb.ac.at">ANNO – AustriaN Newspapers Online</a>
+                            <xsl:text>, aus dem </xsl:text>
                             <a href="https://kulturerbe.burgtheater.at">Burgtheater (Kulturerbe digital)</a>
                             <xsl:text>, dem </xsl:text>
                             <a href="https://www.mdw.ac.at/imi/operapolitics/spielplan-wiener-oper/web/">Spielplan der Wiener Oper</a>
@@ -132,10 +134,10 @@
                             <a href="https://schnitzler-kultur.acdh.oeaw.ac.at">Schnitzler: Kulturveranstaltungen</a>
                             <xsl:text>, </xsl:text>
                             <a href="https://brahms-online.oeaw.ac.at">Brahms online</a>
-                            <xsl:text> und weiteren Projekten. Zusammengeführt werden sie in der </xsl:text>
+                            <xsl:text> und weiteren Projekten, siehe </xsl:text>
+                            <a href="datengeber.html">Datengeber</a>
+                            <xsl:text>. Zusammengeführt werden sie in der </xsl:text>
                             <a href="https://pmb.acdh.oeaw.ac.at">PMB – Personen der Moderne Basis</a>
-                            <xsl:text>. Mehr unter </xsl:text>
-                            <a href="quellen.html">Quellen</a>
                             <xsl:text>.</xsl:text>
                         </p>
                     </div>
